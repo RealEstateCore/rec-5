@@ -1,0 +1,1750 @@
+# REC Ontology v4 (Configurable Translation)
+# Generated from DTDL sources using translation-config.json
+# Date: 2025-11-20T15:17:07.654Z
+#
+# This is the formative version - edit this file directly after generation
+# Configuration applied: REC DTDL to OWL/SHACL translation configuration
+# Swedish translations: enabled
+# Observation subclasses excluded: true
+# Substance enums excluded: true
+#
+# Integration with Brick Schema via rec:hasPoint → brick:Point
+#
+
+@prefix owl: <http://www.w3.org/2002/07/owl#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix rec: <http://w3id.org/rec#>.
+@prefix sh: <http://www.w3.org/ns/shacl#>.
+@prefix brick: <https://brickschema.org/schema/Brick#>.
+
+rec:AccessControlZone
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Access control zone"@en, "Access control zone"@sv;
+    rdfs:subClassOf rec:Zone.
+rec:AccessPanel
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Access panel"@en, "Access panel"@sv;
+    rdfs:subClassOf rec:BarrierAsset.
+rec:acknowledgedBy
+    a owl:ObjectProperty;
+    rdfs:label "acknowledged by"@en, "acknowledged by"@sv;
+    rdfs:subPropertyOf rec:relationship.
+rec:acknowledgedByShape
+    a sh:PropertyShape;
+    sh:class rec:Agent;
+    sh:maxCount 1;
+    sh:message
+        "Property acknowledgedBy must reference a valid instance of Agent. Can have at most one acknowledgedBy"@en;
+    sh:path rec:acknowledgedBy.
+rec:acknowledgedTime
+    a owl:DatatypeProperty;
+    rdfs:label "acknowledged time"@en, "acknowledged time"@sv;
+    rdfs:range xsd:dateTime.
+rec:acknowledgedTimeShape
+a sh:PropertyShape; sh:datatype xsd:dateTime; sh:path rec:acknowledgedTime.
+rec:ActuationEvent
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Actuation event"@en, "Actuation event"@sv;
+    rdfs:subClassOf rec:PointEvent;
+    sh:property rec:targetPointShape, rec:valueShape.
+rec:address
+    a owl:ObjectProperty;
+    rdfs:comment
+        "Physical address of the architecture (site, building, sub-building, entrance room, etc.) in question."@en;
+    rdfs:label "address"@en, "address"@sv;
+    rdfs:subPropertyOf rec:relationship.
+rec:addressLine1
+    a owl:DatatypeProperty;
+    rdfs:label "address line 1"@en, "address line 1"@sv;
+    rdfs:range xsd:string.
+rec:addressLine1Shape
+a sh:PropertyShape; sh:datatype xsd:string; sh:path rec:addressLine1 .
+rec:addressLine2
+    a owl:DatatypeProperty;
+    rdfs:label "address line 2"@en, "address line 2"@sv;
+    rdfs:range xsd:string.
+rec:addressLine2Shape
+a sh:PropertyShape; sh:datatype xsd:string; sh:path rec:addressLine2 .
+rec:addressShape
+    a sh:PropertyShape;
+    sh:class rec:PostalAddress;
+    sh:message
+    "Property address must reference a valid instance of PostalAddress"@en;
+    sh:path rec:address.
+rec:adjacentElement
+    a owl:ObjectProperty;
+    rdfs:label "adjacent element"@en, "adjacent element"@sv;
+    rdfs:subPropertyOf rec:relationship.
+rec:adjacentElementShape
+    a sh:PropertyShape;
+    sh:class rec:BuildingElement;
+    sh:message
+        "Property adjacentElement must reference a valid instance of BuildingElement"@en;
+    sh:path rec:adjacentElement.
+rec:AdmittingRoom
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Admitting room"@en, "Admitting room"@sv;
+    rdfs:subClassOf rec:HealthcareRoom.
+rec:Agent
+    a owl:Class, sh:NodeShape;
+    rdfs:comment
+        "The human, group, or machine that consumes or acts upon an object or data. This higher-level grouping allows properties that are shared among its subclasses (Person, Organization, ....) to be anchored in one joint place, on the Agent class."@en;
+    rdfs:label "Agent"@en, "Agent"@sv;
+    rdfs:subClassOf rec:Entity;
+    sh:property
+        rec:hasIdentifierShape, rec:isMemberOfShape, rec:memberOfShape,
+        rec:nameShape, rec:ownsShape.
+rec:AlarmObject
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Alarm object"@en, "Alarm object"@sv;
+    rdfs:subClassOf rec:ServiceObject.
+rec:Apartment
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Apartment"@en, "Apartment"@sv;
+    rdfs:subClassOf rec:Collection;
+    sh:property rec:includesShape.
+rec:architectedBy
+    a owl:ObjectProperty;
+    rdfs:label "architected by"@en, "architected by"@sv;
+    rdfs:subPropertyOf rec:relationship.
+rec:architectedByShape
+    a sh:PropertyShape;
+    sh:class rec:Agent;
+    sh:message
+    "Property architectedBy must reference a valid instance of Agent"@en;
+    sh:path rec:architectedBy.
+rec:ArchitecturalAsset
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Architectural asset"@en, "Architectural asset"@sv;
+    rdfs:subClassOf rec:Asset.
+rec:Architecture
+    a owl:Class, sh:NodeShape;
+    rdfs:comment
+        "A designed/landscaped (or potentially designed/landscaped) part of the physical world that has a 3D spatial extent. E.g., a building site, a building, levels within the building, rooms, etc."@en;
+    rdfs:label "Architecture"@en, "Architecture"@sv;
+    rdfs:subClassOf rec:Space;
+    sh:property
+        rec:addressShape, rec:adjacentElementShape, rec:architectedByShape,
+        rec:constructedByShape, rec:containsElementShape,
+        rec:documentationShape, rec:hasAreaShape, rec:hasCapacityShape,
+        rec:hasPointShape, rec:intersectingElementShape, rec:operatedByShape,
+        rec:ownedByShape.
+rec:ArchitectureArea
+    a owl:Class, sh:NodeShape;
+    rdfs:comment
+        "Describes business-relevant area measurements typically associated with architected spaces. As the exact requirements on these measurements will vary from case to case or jurisdiction to jurisdiction, subclassing and specializing this definition is encouraged."@en;
+    rdfs:label "Architecture area"@en, "Architecture area"@sv;
+    rdfs:subClassOf rec:Information;
+    sh:property rec:grossAreaShape, rec:netAreaShape, rec:rentableAreaShape.
+rec:ArchitectureCapacity
+    a owl:Class, sh:NodeShape;
+    rdfs:comment
+        "Describes business-relevant capacity measurements typically associated with architected spaces. As the exact requirements on these measurements will vary from case to case or jurisdiction to jurisdiction, subclassing and specializing this definition is encouraged."@en;
+    rdfs:label "Architecture capacity"@en, "Architecture capacity"@sv;
+    rdfs:subClassOf rec:Information;
+    sh:property rec:maxOccupancyShape, rec:seatingCapacityShape.
+rec:Asset
+    a owl:Class, sh:NodeShape;
+    rdfs:comment
+        "Something which is placed inside of a building, but is not an integral part of that building's structure; e.g., furniture, equipment, systems, etc."@en;
+    rdfs:label "Asset"@en, "Asset"@sv;
+    rdfs:subClassOf rec:Entity;
+    sh:property
+        rec:assetTagShape, rec:commissionedByShape, rec:commissioningDateShape,
+        rec:documentationShape, rec:geometryShape, rec:hasIdentifierShape,
+        rec:hasPartShape, rec:hasPointShape, rec:initialCostShape,
+        rec:installationDateShape, rec:installedByShape, rec:IPAddressShape,
+        rec:isPartOfShape, rec:locatedInShape, rec:MACAddressShape,
+        rec:maintenanceIntervalShape, rec:manufacturedByShape,
+        rec:modelNumberShape, rec:mountedOnShape, rec:nameShape,
+        rec:serialNumberShape, rec:servicedByShape, rec:turnoverDateShape,
+        rec:weightShape.
+rec:assetTag
+    a owl:DatatypeProperty;
+    rdfs:label "asset tag"@en, "asset tag"@sv;
+    rdfs:range xsd:string.
+rec:assetTagShape a sh:PropertyShape; sh:datatype xsd:string; sh:path rec:assetTag.
+
+rec:Atrium
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Atrium"@en, "Atrium"@sv;
+    rdfs:subClassOf rec:Room.
+rec:Auditorium
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Auditorium"@en, "Auditorium"@sv;
+    rdfs:subClassOf rec:Room.
+rec:BackOffice
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Back office"@en, "Back office"@sv;
+    rdfs:subClassOf rec:Room.
+rec:Balcony
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Balcony"@en, "Balcony"@sv;
+    rdfs:subClassOf rec:BuildingElement.
+rec:BarrierAsset
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Barrier asset"@en, "Barrier asset"@sv;
+    rdfs:subClassOf rec:ArchitecturalAsset.
+rec:BarRoom
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Bar room"@en, "Bar room"@sv;
+    rdfs:subClassOf rec:FoodHandlingRoom.
+rec:BasementLevel
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Basement level"@en, "Basement level"@sv;
+    rdfs:subClassOf rec:Level.
+rec:Bathroom
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Bathroom"@en, "Bathroom"@sv;
+    rdfs:subClassOf rec:Room.
+rec:Bed
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Bed"@en, "Bed"@sv;
+    rdfs:subClassOf rec:Furniture.
+rec:Bedroom
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Bedroom"@en, "Bedroom"@sv;
+    rdfs:subClassOf rec:Room.
+rec:BicycleGarage
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Bicycle garage"@en, "Bicycle garage"@sv;
+    rdfs:subClassOf rec:Garage.
+rec:Bookcase
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Bookcase"@en, "Bookcase"@sv;
+    rdfs:subClassOf rec:Furniture.
+rec:Building
+    a owl:Class, sh:NodeShape;
+    rdfs:comment "A confined building structure."@en;
+    rdfs:label "Building"@en, "Building"@sv;
+    rdfs:subClassOf rec:Architecture.
+rec:BuildingElement
+    a owl:Class, sh:NodeShape;
+    rdfs:comment
+        "A part that constitutes a piece of a building's structural makeup. E.g., Facade, Wall, Slab, Roof, etc."@en;
+    rdfs:label "Building element"@en, "Building element"@sv;
+    rdfs:subClassOf rec:Entity;
+    sh:property
+        rec:documentationShape, rec:hasIdentifierShape, rec:hasPartShape,
+        rec:isPartOfShape, rec:locatedInShape, rec:nameShape.
+rec:BulletinBoard
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Bulletin board"@en, "Bulletin board"@sv;
+    rdfs:subClassOf rec:Furniture.
+rec:Cabinet
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Cabinet"@en, "Cabinet"@sv;
+    rdfs:subClassOf rec:UtilitiesRoom.
+rec:CableRoom
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Cable room"@en, "Cable room"@sv;
+    rdfs:subClassOf rec:UtilitiesRoom.
+rec:CafeteriaRoom
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Cafeteria room"@en, "Cafeteria room"@sv;
+    rdfs:subClassOf rec:FoodHandlingRoom.
+rec:Campus
+    a owl:Class, sh:NodeShape;
+    rdfs:comment
+        "A campus represents a collection of location entities. The constituent locations may have differing legal ownership and utilization purposes, but they are generally perceived as a coherent unit or sub-region within a city or other region. E.g., a university campus, a hospital campus, a corporate campus, etc."@en;
+    rdfs:label "Campus"@en, "Campus"@sv;
+    rdfs:subClassOf rec:Collection;
+    sh:property rec:includesShape.
+rec:Cart
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Cart"@en, "Cart"@sv;
+    rdfs:subClassOf rec:Furniture.
+rec:Chair
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Chair"@en, "Chair"@sv;
+    rdfs:subClassOf rec:Furniture.
+rec:Cinema
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Cinema"@en, "Cinema"@sv;
+    rdfs:subClassOf rec:Room.
+rec:city
+a owl:DatatypeProperty; rdfs:label "city"@en, "city"@sv; rdfs:range xsd:string.
+rec:cityShape a sh:PropertyShape; sh:datatype xsd:string; sh:path rec:city.
+
+rec:Classroom
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Classroom"@en, "Classroom"@sv;
+    rdfs:subClassOf rec:EducationalRoom.
+rec:CleaningRoom
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Cleaning room"@en, "Cleaning room"@sv;
+    rdfs:subClassOf rec:Room.
+rec:ClimateControlRoom
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Climate-control room"@en, "Climate-control room"@sv;
+    rdfs:subClassOf rec:UtilitiesRoom.
+rec:CloakRoom
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Cloak room"@en, "Cloak room"@sv;
+    rdfs:subClassOf rec:Room.
+rec:closedBy
+    a owl:ObjectProperty;
+    rdfs:label "closed by"@en, "closed by"@sv;
+    rdfs:subPropertyOf rec:relationship.
+rec:closedByShape
+    a sh:PropertyShape;
+    sh:class rec:Agent;
+    sh:maxCount 1;
+    sh:message
+        "Property closedBy must reference a valid instance of Agent. Can have at most one closedBy"@en;
+    sh:path rec:closedBy.
+rec:closedTime
+    a owl:DatatypeProperty;
+    rdfs:label "closed time"@en, "closed time"@sv;
+    rdfs:range xsd:dateTime.
+rec:closedTimeShape
+a sh:PropertyShape; sh:datatype xsd:dateTime; sh:path rec:closedTime.
+rec:CoatRack
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Coat rack"@en, "Coat rack"@sv;
+    rdfs:subClassOf rec:Furniture.
+rec:CoffeeTable
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Coffee table"@en, "Coffee table"@sv;
+    rdfs:subClassOf rec:Table.
+rec:Collection
+    a owl:Class, sh:NodeShape;
+    rdfs:comment
+        "An administrative grouping of entities that are adressed and treated as a unit for some purpose. These entities may have some spatial arrangement (e.g., an apartment is typically contiguous) but that is not a requirement (see, e.g., a distributed campus consisting of spatially disjoint plots or buildings). Inclusion in a Collection is determined by the 'includes' field on a specific subclass."@en;
+    rdfs:label "Collection"@en, "Collection"@sv;
+    rdfs:subClassOf rec:Entity;
+    sh:property rec:documentationShape, rec:hasIdentifierShape, rec:nameShape.
+rec:commissionedBy
+    a owl:ObjectProperty;
+    rdfs:label "commissioned by"@en, "commissioned by"@sv;
+    rdfs:subPropertyOf rec:relationship.
+rec:commissionedByShape
+    a sh:PropertyShape;
+    sh:class rec:Agent;
+    sh:message
+    "Property commissionedBy must reference a valid instance of Agent"@en;
+    sh:path rec:commissionedBy.
+rec:commissioningDate
+    a owl:DatatypeProperty;
+    rdfs:label "commissioning date"@en, "commissioning date"@sv;
+    rdfs:range xsd:date.
+rec:commissioningDateShape
+a sh:PropertyShape; sh:datatype xsd:date; sh:path rec:commissioningDate.
+rec:Company
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Company"@en, "Company"@sv;
+    rdfs:subClassOf rec:Organization.
+rec:ComputerCart
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Computer cart"@en, "Computer cart"@sv;
+    rdfs:subClassOf rec:Cart.
+rec:ConferenceRoom
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Conference room"@en, "Conference room"@sv;
+    rdfs:subClassOf rec:Room.
+rec:ConferenceTable
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Conference table"@en, "Conference table"@sv;
+    rdfs:subClassOf rec:Table.
+rec:constructedBy
+    a owl:ObjectProperty;
+    rdfs:label "constructedBy"@en, "constructedBy"@sv;
+    rdfs:subPropertyOf rec:relationship.
+rec:constructedByShape
+    a sh:PropertyShape;
+    sh:class rec:Agent;
+    sh:message
+    "Property constructedBy must reference a valid instance of Agent"@en;
+    sh:path rec:constructedBy.
+rec:containsElement
+    a owl:ObjectProperty;
+    rdfs:comment
+        "Links an Architecture to BuildingElement that is contained in the Space."@en;
+    rdfs:label "contains element"@en, "contains element"@sv;
+    rdfs:subPropertyOf rec:relationship.
+rec:containsElementShape
+    a sh:PropertyShape;
+    sh:class rec:BuildingElement;
+    sh:message
+        "Property containsElement must reference a valid instance of BuildingElement"@en;
+    sh:path rec:containsElement.
+rec:ConversationRoom
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Conversation room"@en, "Conversation room"@sv;
+    rdfs:subClassOf rec:Room.
+rec:CookingRoom
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Cooking room"@en, "Cooking room"@sv;
+    rdfs:subClassOf rec:FoodHandlingRoom.
+rec:coordinates
+    a owl:DatatypeProperty;
+    rdfs:label "coordinates"@en, "coordinates"@sv;
+    rdfs:range xsd:string.
+rec:coordinatesShape
+a sh:PropertyShape; sh:datatype xsd:string; sh:path rec:coordinates.
+rec:coordinateSystem
+    a owl:DatatypeProperty;
+    rdfs:label "coordinate system"@en, "coordinate system"@sv;
+    rdfs:range xsd:string.
+rec:coordinateSystemShape
+    a sh:PropertyShape;
+    rdfs:comment "Allowed values: LocalCoordinates, SWEREF99, WGS84"@en;
+    sh:datatype xsd:string;
+    sh:path rec:coordinateSystem.
+rec:CopyingRoom
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Copying room"@en, "Copying room"@sv;
+    rdfs:subClassOf rec:Room.
+rec:country
+    a owl:DatatypeProperty;
+    rdfs:label "country"@en, "country"@sv;
+    rdfs:range xsd:string.
+rec:countryShape a sh:PropertyShape; sh:datatype xsd:string; sh:path rec:country.
+
+rec:createdBy
+    a owl:ObjectProperty;
+    rdfs:label "created by"@en, "created by"@sv;
+    rdfs:subPropertyOf rec:relationship.
+rec:createdByShape
+    a sh:PropertyShape;
+    sh:class rec:Agent;
+    sh:maxCount 1;
+    sh:message
+        "Property createdBy must reference a valid instance of Agent. Can have at most one createdBy"@en;
+    sh:path rec:createdBy.
+rec:createdTime
+    a owl:DatatypeProperty;
+    rdfs:label "created time"@en, "created time"@sv;
+    rdfs:range xsd:dateTime.
+rec:createdTimeShape
+a sh:PropertyShape; sh:datatype xsd:dateTime; sh:path rec:createdTime.
+rec:currentLevel
+    a owl:DatatypeProperty;
+    rdfs:label "current level"@en, "current level"@sv;
+    rdfs:range xsd:string.
+rec:currentLevelShape
+a sh:PropertyShape; sh:datatype xsd:string; sh:path rec:currentLevel.
+rec:DataServerRoom
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Data server room"@en, "Data server room"@sv;
+    rdfs:subClassOf rec:UtilitiesRoom.
+rec:Department
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Department"@en, "Department"@sv;
+    rdfs:subClassOf rec:Organization.
+rec:Desk
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Desk"@en, "Desk"@sv;
+    rdfs:subClassOf rec:Furniture.
+rec:DeskLamp
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Desk lamp"@en, "Desk lamp"@sv;
+    rdfs:subClassOf rec:Lamp.
+rec:DiningRoom
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Dining room"@en, "Dining room"@sv;
+    rdfs:subClassOf rec:FoodHandlingRoom.
+rec:DisabledToilet
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Disabled toilet"@en, "Disabled toilet"@sv;
+    rdfs:subClassOf rec:PersonalHygiene.
+rec:DishingRoom
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Dishing room"@en, "Dishing room"@sv;
+    rdfs:subClassOf rec:FoodHandlingRoom.
+rec:Document
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Document"@en, "Document"@sv;
+    rdfs:subClassOf rec:Information;
+    sh:property rec:documentTopicShape, rec:urlShape.
+rec:documentation
+    a owl:ObjectProperty;
+    rdfs:label "documentation"@en, "documentation"@sv;
+    rdfs:subPropertyOf rec:relationship.
+rec:documentationShape
+    a sh:PropertyShape;
+    sh:class rec:Document;
+    sh:message
+    "Property documentation must reference a valid instance of Document"@en;
+    sh:path rec:documentation.
+rec:documentTopic
+    a owl:ObjectProperty;
+    rdfs:label "document topic"@en, "document topic"@sv;
+    rdfs:subPropertyOf rec:relationship.
+rec:documentTopicShape a sh:PropertyShape; sh:path rec:documentTopic.
+
+rec:Door
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Door"@en, "Door"@sv;
+    rdfs:subClassOf rec:BarrierAsset.
+rec:DressingRoom
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Dressing room"@en, "Dressing room"@sv;
+    rdfs:subClassOf rec:Room.
+rec:EducationalRoom
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Educational room"@en, "Educational room"@sv;
+    rdfs:subClassOf rec:Room.
+rec:ElectricityRoom
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Electricity room"@en, "Electricity room"@sv;
+    rdfs:subClassOf rec:UtilitiesRoom.
+rec:ElevatorRoom
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Elevator room"@en, "Elevator room"@sv;
+    rdfs:subClassOf rec:Room.
+rec:ElevatorShaft
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Elevator shaft"@en, "Elevator shaft"@sv;
+    rdfs:subClassOf rec:Room.
+rec:ElevatorTrip
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Elevator trip"@en, "Elevator trip"@sv;
+    rdfs:subClassOf rec:Event;
+    sh:property
+        rec:currentLevelShape, rec:endLevelShape, rec:startLevelShape,
+        rec:tripDirectionShape.
+rec:end
+a owl:DatatypeProperty; rdfs:label "end"@en, "end"@sv; rdfs:range xsd:dateTime.
+rec:endLevel
+    a owl:DatatypeProperty;
+    rdfs:label "end level"@en, "end level"@sv;
+    rdfs:range xsd:string.
+rec:endLevelShape a sh:PropertyShape; sh:datatype xsd:string; sh:path rec:endLevel.
+
+rec:endShape a sh:PropertyShape; sh:datatype xsd:dateTime; sh:path rec:end.
+
+rec:EndTable
+    a owl:Class, sh:NodeShape;
+    rdfs:label "End table"@en, "End table"@sv;
+    rdfs:subClassOf rec:Table.
+rec:Entity
+    rdfs:comment "All REC classes will be subclasses of rec:Entity"@en;
+    rdfs:label "Entity"@en, "Entity"@sv.
+rec:Entrance
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Entrance"@en, "Entrance"@sv;
+    rdfs:subClassOf rec:Room.
+rec:EquipmentCollection
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Equipment collection"@en, "Equipment collection"@sv;
+    rdfs:subClassOf rec:Collection;
+    sh:property rec:includesShape.
+rec:ErrorReport
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Error report"@en, "Error report"@sv;
+    rdfs:subClassOf rec:ServiceObject.
+rec:Event
+    a owl:Class, sh:NodeShape;
+    rdfs:comment
+        "A temporally indexed entity, e.g., an observation, a lease, a construction project, etc. Can be instantaneous (timestamp property assigned) or have temporal extent (start and end properties assigned). Subclasses may define specific behaviour and requirements, e.g., on spatial indexing, agent participation, etc."@en;
+    rdfs:label "Event"@en, "Event"@sv;
+    rdfs:subClassOf rec:Entity;
+    sh:property
+        rec:endShape, rec:hasIdentifierShape, rec:nameShape, rec:startShape,
+        rec:timestampShape.
+rec:ExceptionEvent
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Exception event"@en, "Exception event"@sv;
+    rdfs:subClassOf rec:PointEvent;
+    sh:property rec:sourcePointShape, rec:valueShape.
+rec:ExerciseRoom
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Exercise room"@en, "Exercise room"@sv;
+    rdfs:subClassOf rec:Room.
+rec:ExhibitionRoom
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Exhibition room"@en, "Exhibition room"@sv;
+    rdfs:subClassOf rec:Room.
+rec:Facade
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Facade"@en, "Facade"@sv;
+    rdfs:subClassOf rec:BuildingElement.
+rec:familyName
+    a owl:DatatypeProperty;
+    rdfs:label "familyName"@en, "familyName"@sv;
+    rdfs:range xsd:string.
+rec:familyNameShape
+a sh:PropertyShape; sh:datatype xsd:string; sh:path rec:familyName.
+rec:FilingCabinet
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Filing cabinet"@en, "Filing cabinet"@sv;
+    rdfs:subClassOf rec:Furniture.
+rec:FittingRoom
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Fitting room"@en, "Fitting room"@sv;
+    rdfs:subClassOf rec:RetailRoom.
+rec:FloorLamp
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Floor lamp"@en, "Floor lamp"@sv;
+    rdfs:subClassOf rec:Lamp.
+rec:FloorMat
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Floor mat"@en, "Floor mat"@sv;
+    rdfs:subClassOf rec:Furniture.
+rec:FoldingChair
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Folding chair"@en, "Folding chair"@sv;
+    rdfs:subClassOf rec:Chair.
+rec:FoldingTable
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Folding table"@en, "Folding table"@sv;
+    rdfs:subClassOf rec:Table.
+rec:FoodHandlingRoom
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Food-handling room"@en, "Food-handling room"@sv;
+    rdfs:subClassOf rec:Room.
+rec:Footrest
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Footrest"@en, "Footrest"@sv;
+    rdfs:subClassOf rec:Furniture.
+rec:Furniture
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Furniture"@en, "Furniture"@sv;
+    rdfs:subClassOf rec:Asset.
+rec:FurnitureCollection
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Furniture collection"@en, "Furniture collection"@sv;
+    rdfs:subClassOf rec:Collection;
+    sh:property rec:includesShape.
+rec:Garage
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Garage"@en, "Garage"@sv;
+    rdfs:subClassOf rec:Room.
+rec:gender
+    a owl:DatatypeProperty;
+    rdfs:label "gender"@en, "gender"@sv;
+    rdfs:range xsd:string.
+rec:genderShape a sh:PropertyShape; sh:datatype xsd:string; sh:path rec:gender.
+
+rec:geometry
+    a owl:ObjectProperty;
+    rdfs:comment
+        "A GeoJSON Geometry representing the position or extent of the asset."@en,
+        "Polygon representing the spatial extent of this Space."@en;
+    rdfs:label "geometry"@en, "geometry"@sv;
+    rdfs:subPropertyOf rec:relationship.
+rec:Geometry
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Geometry"@en, "Geometry"@sv;
+    rdfs:subClassOf rec:Information;
+    sh:property rec:coordinateSystemShape.
+rec:geometryShape
+    a sh:PropertyShape;
+    sh:class rec:Geometry;
+    sh:maxCount 1;
+    sh:message
+        "Property geometry must reference a valid instance of Geometry. Can have at most one geometry"@en;
+    sh:path rec:geometry.
+rec:georeference
+    a owl:ObjectProperty;
+    rdfs:comment
+        "A georeference creates a relationship between the local coordinate system used within a building (e.g., measured in meters) and a geographic coordinate system (e.g., lat, long, alt), such that locally placed Spaces can be resolved and rendered in that geographic coordinate system (e.g., for mapping purposes)."@en;
+    rdfs:label "georeference"@en, "georeference"@sv;
+    rdfs:subPropertyOf rec:relationship.
+rec:Georeference
+    a owl:Class, sh:NodeShape;
+    rdfs:comment
+        "A georeference creates a relationship between a local coordinate system into a geographic coordinate system."@en;
+    rdfs:label "Georeference"@en, "Georeference"@sv;
+    rdfs:subClassOf rec:Information.
+rec:georeferenceShape
+    a sh:PropertyShape;
+    sh:class rec:Georeference;
+    sh:maxCount 1;
+    sh:message
+        "Property georeference must reference a valid instance of Georeference. Can have at most one georeference"@en;
+    sh:path rec:georeference.
+rec:Geotransform
+    a owl:Class, sh:NodeShape;
+    rdfs:comment
+        "A transform following GDAL's Affine Transform that transforms a local coordinate into a WGS84 coordinate. Created from Ground Control Points (GCP) using GDAL's GCPsToGeotransform method."@en;
+    rdfs:label "Geotransform"@en, "Geotransform"@sv;
+    rdfs:subClassOf rec:Georeference;
+    sh:property
+        rec:heightScaleFactorShape, rec:originXShape, rec:originYShape,
+        rec:widthScaleFactorShape, rec:xRotationalScaleFactorShape,
+        rec:yRotationalScaleFactorShape.
+rec:givenName
+    a owl:DatatypeProperty;
+    rdfs:label "givenName"@en, "givenName"@sv;
+    rdfs:range xsd:string.
+rec:givenNameShape
+a sh:PropertyShape; sh:datatype xsd:string; sh:path rec:givenName.
+rec:grossArea
+    a owl:DatatypeProperty;
+    rdfs:label "gross area"@en, "gross area"@sv;
+    rdfs:range xsd:float.
+rec:grossAreaShape
+a sh:PropertyShape; sh:datatype xsd:float; sh:path rec:grossArea.
+rec:GroupRoom
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Group room"@en, "Group room"@sv;
+    rdfs:subClassOf rec:EducationalRoom.
+rec:Hallway
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Hallway"@en, "Hallway"@sv;
+    rdfs:subClassOf rec:Room.
+rec:hasArea
+    a owl:ObjectProperty;
+    rdfs:comment "Area measurements for architectural spaces"@en;
+    rdfs:label "hasArea"@en, "hasArea"@sv;
+    rdfs:range rec:ArchitectureArea;
+    rdfs:subPropertyOf rec:relationship.
+rec:hasAreaShape
+    a sh:PropertyShape;
+    sh:class rec:ArchitectureArea;
+    sh:maxCount 1;
+    sh:path rec:hasArea.
+rec:hasCapacity
+    a owl:ObjectProperty;
+    rdfs:comment "Capacity measurements for architectural spaces"@en;
+    rdfs:label "hasCapacity"@en, "hasCapacity"@sv;
+    rdfs:range rec:ArchitectureCapacity;
+    rdfs:subPropertyOf rec:relationship.
+rec:hasCapacityShape
+    a sh:PropertyShape;
+    sh:class rec:ArchitectureCapacity;
+    sh:maxCount 1;
+    sh:path rec:hasCapacity.
+rec:hasIdentifier
+    a owl:ObjectProperty;
+    rdfs:label "har identifierare"@sv, "has identifier"@en;
+    rdfs:range rec:Identifier;
+    rdfs:subPropertyOf rec:relationship.
+rec:hasIdentifierShape
+a sh:PropertyShape; sh:class rec:Identifier; sh:path rec:hasIdentifier.
+rec:hasMember
+    a owl:ObjectProperty;
+    rdfs:comment
+        "Indicates membership in an organization. Note that componency (e.g., departments of a corporation) are expressed using the more generic hasPart property."@en;
+    rdfs:label "has member"@en, "has member"@sv;
+    rdfs:subPropertyOf rec:relationship.
+rec:hasMemberShape
+    a sh:PropertyShape;
+    sh:class rec:Agent;
+    sh:message "Property hasMember must reference a valid instance of Agent"@en;
+    sh:path rec:hasMember.
+rec:hasPart
+    a owl:AsymmetricProperty, owl:IrreflexiveProperty, owl:ObjectProperty;
+    rdfs:comment
+        "Indicates parthood relations in organizations (e.g., departments of a corporation). Note that membership in an organization is expressed using the more specific hasMember property."@en;
+    rdfs:label "has part"@en, "has part"@sv;
+    rdfs:subPropertyOf rec:relationship.
+rec:hasPartShape
+    a sh:PropertyShape;
+    sh:class rec:Asset, rec:BuildingElement, rec:Organization, rec:Space;
+    sh:message
+        "Property hasPart must reference a valid instance of Asset"@en,
+        "Property hasPart must reference a valid instance of BuildingElement"@en,
+        "Property hasPart must reference a valid instance of Organization"@en,
+        "Property hasPart must reference a valid instance of Space"@en;
+    sh:path rec:hasPart.
+rec:hasPoint
+    a owl:AsymmetricProperty, owl:IrreflexiveProperty, owl:ObjectProperty;
+    rdfs:label "has point"@en, "has point"@sv;
+    rdfs:subPropertyOf rec:relationship.
+rec:hasPointShape
+    a sh:PropertyShape;
+    sh:class brick:Point;
+    sh:message "Property hasPoint must reference a valid instance of Point"@en;
+    sh:path rec:hasPoint.
+rec:HealthcareRoom
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Healthcare room"@en, "Healthcare room"@sv;
+    rdfs:subClassOf rec:Room.
+rec:heightScaleFactor
+    a owl:DatatypeProperty;
+    rdfs:label "height scale factor"@en, "height scale factor"@sv;
+    rdfs:range xsd:double.
+rec:heightScaleFactorShape
+a sh:PropertyShape; sh:datatype xsd:double; sh:path rec:heightScaleFactor.
+rec:Hospital
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Hospital"@en, "Hospital"@sv;
+    rdfs:subClassOf rec:Building.
+rec:HVACZone
+    a owl:Class, sh:NodeShape;
+    rdfs:label "HVAC zone"@en, "HVAC zone"@sv;
+    rdfs:subClassOf rec:Zone.
+rec:Identifier
+    a owl:Class;
+    rdfs:label "Identifier"@en, "Identifier"@sv;
+    rdfs:subClassOf rec:Entity.
+rec:image
+    a owl:DatatypeProperty;
+    rdfs:label "image"@en, "image"@sv;
+    rdfs:range xsd:string.
+rec:imageShape a sh:PropertyShape; sh:datatype xsd:string; sh:path rec:image.
+
+rec:includes
+    a owl:ObjectProperty;
+    rdfs:label "includes"@en, "includes"@sv;
+    rdfs:subPropertyOf rec:relationship.
+rec:includesShape
+    a sh:PropertyShape;
+    sh:class rec:Architecture, rec:Furniture, rec:Room, brick:Equipment;
+    sh:message
+        "Property includes must reference a valid instance of Architecture"@en,
+        "Property includes must reference a valid instance of Equipment"@en,
+        "Property includes must reference a valid instance of Furniture"@en,
+        "Property includes must reference a valid instance of Room"@en;
+    sh:path rec:includes.
+rec:Information
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Information"@en, "Information"@sv;
+    rdfs:subClassOf rec:Entity;
+    sh:property rec:hasIdentifierShape, rec:nameShape.
+rec:initialCost
+    a owl:DatatypeProperty;
+    rdfs:label "initial cost"@en, "initial cost"@sv;
+    rdfs:range xsd:string.
+rec:initialCostShape
+a sh:PropertyShape; sh:datatype xsd:string; sh:path rec:initialCost.
+rec:installationDate
+    a owl:DatatypeProperty;
+    rdfs:label "installation date"@en, "installation date"@sv;
+    rdfs:range xsd:date.
+rec:installationDateShape
+a sh:PropertyShape; sh:datatype xsd:date; sh:path rec:installationDate.
+rec:installedBy
+    a owl:ObjectProperty;
+    rdfs:label "installed by"@en, "installed by"@sv;
+    rdfs:subPropertyOf rec:relationship.
+rec:installedByShape
+    a sh:PropertyShape;
+    sh:class rec:Agent;
+    sh:message
+    "Property installedBy must reference a valid instance of Agent"@en;
+    sh:path rec:installedBy.
+rec:intersectingElement
+    a owl:ObjectProperty;
+    rdfs:label "intersecting element"@en, "intersecting element"@sv;
+    rdfs:subPropertyOf rec:relationship.
+rec:intersectingElementShape
+    a sh:PropertyShape;
+    sh:class rec:BuildingElement;
+    sh:message
+        "Property intersectingElement must reference a valid instance of BuildingElement"@en;
+    sh:path rec:intersectingElement.
+rec:IPAddress
+    a owl:DatatypeProperty;
+    rdfs:label "IP address"@en, "IP address"@sv;
+    rdfs:range xsd:string.
+rec:IPAddressShape
+a sh:PropertyShape; sh:datatype xsd:string; sh:path rec:IPAddress.
+rec:isLocationOf
+    a owl:AsymmetricProperty, owl:IrreflexiveProperty, owl:ObjectProperty;
+    rdfs:label "is location of"@en, "is location of"@sv;
+    rdfs:subPropertyOf rec:relationship.
+rec:isLocationOfShape
+    a sh:PropertyShape;
+    sh:class rec:Asset;
+    sh:message
+    "Property isLocationOf must reference a valid instance of Asset"@en;
+    sh:path rec:isLocationOf.
+rec:isMemberOf
+    a owl:ObjectProperty;
+    rdfs:comment
+        "Indicates membership in an organization. Note that componency (e.g., departments of a corporation) are expressed using the more generic Organization.isPartOf property. (DEPRECATED: Use memberOf going forward)"@en;
+    rdfs:label "is member of (DEPRECATED)"@en, "is member of (DEPRECATED)"@sv;
+    rdfs:subPropertyOf rec:relationship.
+rec:isMemberOfShape
+    a sh:PropertyShape;
+    sh:class rec:Organization;
+    sh:message
+    "Property isMemberOf must reference a valid instance of Organization"@en;
+    sh:path rec:isMemberOf.
+rec:isPartOf
+    a owl:AsymmetricProperty, owl:IrreflexiveProperty, owl:ObjectProperty;
+    rdfs:comment
+        "Indicates parthood relations in organizations (e.g., departments of a corporation). Note that membership in an organization is expressed using the Agent.isMemberOf property."@en;
+    rdfs:label "is part of"@en, "is part of"@sv;
+    rdfs:subPropertyOf rec:relationship.
+rec:isPartOfShape
+    a sh:PropertyShape;
+    sh:class rec:Asset, rec:BuildingElement, rec:Organization, rec:Space;
+    sh:maxCount 1;
+    sh:message
+        "Property isPartOf must reference a valid instance of Asset"@en,
+        "Property isPartOf must reference a valid instance of BuildingElement. Can have at most one isPartOf"@en,
+        "Property isPartOf must reference a valid instance of Organization"@en,
+        "Property isPartOf must reference a valid instance of Space. Can have at most one isPartOf"@en;
+    sh:path rec:isPartOf.
+rec:Kitchenette
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Kitchenette"@en, "Kitchenette"@sv;
+    rdfs:subClassOf rec:FoodHandlingRoom.
+rec:Laboratory
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Laboratory"@en, "Laboratory"@sv;
+    rdfs:subClassOf rec:Room.
+rec:LaboratoryDry
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Laboratory (dry)"@en, "Laboratory (dry)"@sv;
+    rdfs:subClassOf rec:Laboratory.
+rec:LaboratoryWet
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Laboratory (wet)"@en, "Laboratory (wet)"@sv;
+    rdfs:subClassOf rec:Laboratory.
+rec:Lamp
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Lamp"@en, "Lamp"@sv;
+    rdfs:subClassOf rec:Furniture.
+rec:LaundryRoom
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Laundry room"@en, "Laundry room"@sv;
+    rdfs:subClassOf rec:Room.
+rec:Lease
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Lease"@en, "Lease"@sv;
+    rdfs:subClassOf rec:Event;
+    sh:property
+    rec:leaseeShape, rec:leaseOfShape, rec:leasorShape, rec:regulatedByShape.
+rec:LeaseContract
+    a owl:Class, sh:NodeShape;
+    rdfs:comment
+        "Formal document that identifies the Tenant and the leased asset or property; states lease term and fee (rent), and detailed terms and conditions of the lease agreement."@en;
+    rdfs:label "Lease contract"@en, "Lease contract"@sv;
+    rdfs:subClassOf rec:Document;
+    sh:property rec:regulatesShape.
+rec:leasee
+    a owl:ObjectProperty;
+    rdfs:comment
+    "The agent leasing some leasable object, i.e., the user of the asset."@en;
+    rdfs:label "leasee"@en, "leasee"@sv;
+    rdfs:subPropertyOf rec:relationship.
+rec:leaseeShape
+    a sh:PropertyShape;
+    sh:class rec:Agent;
+    sh:message "Property leasee must reference a valid instance of Agent"@en;
+    sh:path rec:leasee.
+rec:leaseOf
+    a owl:ObjectProperty;
+    rdfs:comment
+    "The object (e.g., property, equipment, etc) that this a lease of."@en;
+    rdfs:label "lease of"@en, "lease of"@sv;
+    rdfs:subPropertyOf rec:relationship.
+rec:leaseOfShape
+    a sh:PropertyShape;
+    sh:class rec:Collection;
+    sh:message
+    "Property leaseOf must reference a valid instance of Collection"@en;
+    sh:path rec:leaseOf.
+rec:leasor
+    a owl:ObjectProperty;
+    rdfs:comment
+        "The agent leasing out some leasable object, i.e., the owner of the asset."@en;
+    rdfs:label "leasor"@en, "leasor"@sv;
+    rdfs:subPropertyOf rec:relationship.
+rec:leasorShape
+    a sh:PropertyShape;
+    sh:class rec:Agent;
+    sh:message "Property leasor must reference a valid instance of Agent"@en;
+    sh:path rec:leasor.
+rec:Level
+    a owl:Class, sh:NodeShape;
+    rdfs:comment "The level of a building, a.k.a. storey, floor, etc."@en;
+    rdfs:label "Level"@en, "Level"@sv;
+    rdfs:subClassOf rec:Architecture;
+    sh:property rec:levelNumberShape.
+rec:levelNumber
+    a owl:DatatypeProperty;
+    rdfs:label "level number"@en, "level number"@sv;
+    rdfs:range xsd:integer.
+rec:levelNumberShape
+a sh:PropertyShape; sh:datatype xsd:integer; sh:path rec:levelNumber.
+rec:Library
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Library"@en, "Library"@sv;
+    rdfs:subClassOf rec:Room.
+rec:LivingRoom
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Living room"@en, "Living room"@sv;
+    rdfs:subClassOf rec:Room.
+rec:LoadingReceivingRoom
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Loading/receiving room"@en, "Loading/receiving room"@sv;
+    rdfs:subClassOf rec:Room.
+rec:Lobby
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Lobby"@en, "Lobby"@sv;
+    rdfs:subClassOf rec:Room.
+rec:locatedIn
+    a owl:AsymmetricProperty, owl:IrreflexiveProperty, owl:ObjectProperty;
+    rdfs:comment
+        "Indicates the architected space (site, building, level, room...) in which this building element is placed."@en;
+    rdfs:label "located in"@en, "located in"@sv;
+    rdfs:subPropertyOf rec:relationship.
+rec:locatedInShape
+    a sh:PropertyShape;
+    sh:class rec:Architecture, rec:Space;
+    sh:maxCount 1;
+    sh:message
+        "Property locatedIn must reference a valid instance of Architecture. Can have at most one locatedIn"@en,
+        "Property locatedIn must reference a valid instance of Space"@en;
+    sh:path rec:locatedIn.
+rec:LockerRoom
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Locker room"@en, "Locker room"@sv;
+    rdfs:subClassOf rec:Room.
+rec:logo
+a owl:DatatypeProperty; rdfs:label "logo"@en, "logo"@sv; rdfs:range xsd:string.
+rec:logoShape a sh:PropertyShape; sh:datatype xsd:string; sh:path rec:logo.
+
+rec:Lounge
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Lounge"@en, "Lounge"@sv;
+    rdfs:subClassOf rec:Room.
+rec:MACAddress
+    a owl:DatatypeProperty;
+    rdfs:label "MAC address"@en, "MAC address"@sv;
+    rdfs:range xsd:string.
+rec:MACAddressShape
+a sh:PropertyShape; sh:datatype xsd:string; sh:path rec:MACAddress.
+rec:MailRoom
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Mail room"@en, "Mail room"@sv;
+    rdfs:subClassOf rec:BackOffice.
+rec:MailroomCart
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Mailroom cart"@en, "Mailroom cart"@sv;
+    rdfs:subClassOf rec:Cart.
+rec:MainEntrance
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Main entrance"@en, "Main entrance"@sv;
+    rdfs:subClassOf rec:Entrance.
+rec:maintenanceInterval
+    a owl:DatatypeProperty;
+    rdfs:label "maintenance interval"@en, "maintenance interval"@sv;
+    rdfs:range xsd:duration.
+rec:maintenanceIntervalShape
+a sh:PropertyShape; sh:datatype xsd:duration; sh:path rec:maintenanceInterval.
+rec:manufacturedBy
+    a owl:ObjectProperty;
+    rdfs:label "manufactured by"@en, "manufactured by"@sv;
+    rdfs:subPropertyOf rec:relationship.
+rec:manufacturedByShape
+    a sh:PropertyShape;
+    sh:class rec:Agent;
+    sh:message
+    "Property manufacturedBy must reference a valid instance of Agent"@en;
+    sh:path rec:manufacturedBy.
+rec:maxOccupancy
+    a owl:DatatypeProperty;
+    rdfs:label "maximum occupancy"@en, "maximum occupancy"@sv;
+    rdfs:range xsd:integer.
+rec:maxOccupancyShape
+a sh:PropertyShape; sh:datatype xsd:integer; sh:path rec:maxOccupancy.
+rec:MeditationRoom
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Meditation room"@en, "Meditation room"@sv;
+    rdfs:subClassOf rec:Room.
+rec:memberOf
+    a owl:ObjectProperty;
+    rdfs:comment
+        "Indicates membership in an organization. Note that componency (e.g., departments of a corporation) are expressed using the more generic Organization.isPartOf property."@en;
+    rdfs:label "member of"@en, "member of"@sv;
+    rdfs:subPropertyOf rec:relationship.
+rec:memberOfShape
+    a sh:PropertyShape;
+    sh:class rec:Organization;
+    sh:message
+    "Property memberOf must reference a valid instance of Organization"@en;
+    sh:path rec:memberOf.
+rec:MezzanineLevel
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Mezzanine level"@en, "Mezzanine level"@sv;
+    rdfs:subClassOf rec:Level.
+rec:MobileDesk
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Mobile desk"@en, "Mobile desk"@sv;
+    rdfs:subClassOf rec:Desk.
+rec:modelNumber
+    a owl:DatatypeProperty;
+    rdfs:label "model number"@en, "model number"@sv;
+    rdfs:range xsd:string.
+rec:modelNumberShape
+a sh:PropertyShape; sh:datatype xsd:string; sh:path rec:modelNumber.
+rec:Morgue
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Morgue"@en, "Morgue"@sv;
+    rdfs:subClassOf rec:HealthcareRoom.
+rec:MothersRoom
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Mothers' room"@en, "Mothers' room"@sv;
+    rdfs:subClassOf rec:Room.
+rec:mountedOn
+    a owl:AsymmetricProperty, owl:IrreflexiveProperty, owl:ObjectProperty;
+    rdfs:comment
+        "An asset may be mounted on some part of the building construction (e.g., a blind on a facade, a camera on a wall, etc)."@en;
+    rdfs:label "mounted on"@en, "mounted on"@sv;
+    rdfs:subPropertyOf rec:relationship.
+rec:mountedOnShape
+    a sh:PropertyShape;
+    sh:class rec:BuildingElement;
+    sh:maxCount 1;
+    sh:message
+        "Property mountedOn must reference a valid instance of BuildingElement. Can have at most one mountedOn"@en;
+    sh:path rec:mountedOn.
+rec:MultiPoint
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Multi point"@en, "Multi point"@sv;
+    rdfs:subClassOf rec:Geometry;
+    sh:property rec:coordinatesShape.
+rec:MultiPolygon
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Multi polygon"@en, "Multi polygon"@sv;
+    rdfs:subClassOf rec:Geometry;
+    sh:property rec:coordinatesShape.
+rec:MultiPurposeRoom
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Multi-purpose room"@en, "Multi-purpose room"@sv;
+    rdfs:subClassOf rec:Room.
+rec:name
+a owl:DatatypeProperty; rdfs:label "name"@en, "name"@sv; rdfs:range xsd:string.
+rec:nameShape a sh:PropertyShape; sh:datatype xsd:string; sh:path rec:name.
+
+rec:namespace
+    a owl:DatatypeProperty;
+    rdfs:domain rec:Identifier;
+    rdfs:label "namespace"@en, "namespace"@sv;
+    rdfs:range xsd:string.
+rec:NeonatalNursingRoom
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Neonatal nursing room"@en, "Neonatal nursing room"@sv;
+    rdfs:subClassOf rec:HealthcareRoom.
+rec:netArea
+    a owl:DatatypeProperty;
+    rdfs:label "net area"@en, "net area"@sv;
+    rdfs:range xsd:float.
+rec:netAreaShape a sh:PropertyShape; sh:datatype xsd:float; sh:path rec:netArea.
+
+rec:NotificationObject
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Notification object"@en, "Notification object"@sv;
+    rdfs:subClassOf rec:ServiceObject.
+rec:objectOfInterest
+    a owl:ObjectProperty;
+    rdfs:label "object of interest"@en, "object of interest"@sv;
+    rdfs:subPropertyOf rec:relationship.
+rec:objectOfInterestShape
+    a sh:PropertyShape;
+    sh:maxCount 1;
+    sh:message "Can have at most one objectOfInterest"@en;
+    sh:path rec:objectOfInterest.
+rec:ObservationEvent
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Observation event"@en, "Observation event"@sv;
+    rdfs:subClassOf rec:PointEvent;
+    sh:property rec:sourcePointShape.
+rec:OccupancyZone
+    a owl:Class, sh:NodeShape;
+    rdfs:comment
+        "Occupancy Zone is a spatial area where devices are monitoring or reporting on the concept of Occupancy (motion sensors, people counters, cameras, etc.)"@en;
+    rdfs:label "Occupancy zone"@en, "Occupancy zone"@sv;
+    rdfs:subClassOf rec:Zone.
+rec:Office
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Office"@en, "Office"@sv;
+    rdfs:subClassOf rec:Room.
+rec:OfficeChair
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Office chair"@en, "Office chair"@sv;
+    rdfs:subClassOf rec:Chair.
+rec:OfficeLandscape
+    a owl:Class, sh:NodeShape;
+    rdfs:label "OfficeLandscape"@en, "OfficeLandscape"@sv;
+    rdfs:subClassOf rec:Office.
+rec:OfficeRoom
+    a owl:Class, sh:NodeShape;
+    rdfs:label "OfficeRoom"@en, "OfficeRoom"@sv;
+    rdfs:subClassOf rec:Office.
+rec:operatedBy
+    a owl:ObjectProperty;
+    rdfs:label "operated by"@en, "operated by"@sv;
+    rdfs:subPropertyOf rec:relationship.
+rec:operatedByShape
+    a sh:PropertyShape;
+    sh:class rec:Agent;
+    sh:message
+    "Property operatedBy must reference a valid instance of Agent"@en;
+    sh:path rec:operatedBy.
+rec:OperatingRoom
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Operating room"@en, "Operating room"@sv;
+    rdfs:subClassOf rec:HealthcareRoom.
+rec:Organization
+    a owl:Class, sh:NodeShape;
+    rdfs:comment
+        "An organization of any sort (e.g., a business, association, project, consortium, tribe, etc.)"@en;
+    rdfs:label "Organization"@en, "Organization"@sv;
+    rdfs:subClassOf rec:Agent;
+    sh:property
+    rec:hasMemberShape, rec:hasPartShape, rec:isPartOfShape, rec:logoShape.
+rec:originX
+    a owl:DatatypeProperty;
+    rdfs:label "origin x"@en, "origin x"@sv;
+    rdfs:range xsd:double.
+rec:originXShape a sh:PropertyShape; sh:datatype xsd:double; sh:path rec:originX.
+
+rec:originY
+    a owl:DatatypeProperty;
+    rdfs:label "origin y"@en, "origin y"@sv;
+    rdfs:range xsd:double.
+rec:originYShape a sh:PropertyShape; sh:datatype xsd:double; sh:path rec:originY.
+
+rec:OutdoorSpace
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Outdoor space"@en, "Outdoor space"@sv;
+    rdfs:subClassOf rec:Architecture.
+rec:OutpatientServicesRoom
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Outpatient services room"@en, "Outpatient services room"@sv;
+    rdfs:subClassOf rec:HealthcareRoom.
+rec:ownedBy
+    a owl:ObjectProperty;
+    rdfs:label "owned by"@en, "owned by"@sv;
+    rdfs:subPropertyOf rec:relationship.
+rec:ownedByShape
+    a sh:PropertyShape;
+    sh:class rec:Agent;
+    sh:message "Property ownedBy must reference a valid instance of Agent"@en;
+    sh:path rec:ownedBy.
+rec:owns
+    a owl:ObjectProperty;
+    rdfs:comment
+        "Indicates ownership of some thing, e.g., a building, an asset, an organization, etc."@en;
+    rdfs:label "owns"@en, "owns"@sv;
+    rdfs:subPropertyOf rec:relationship.
+rec:ownsShape a sh:PropertyShape; sh:path rec:owns.
+
+rec:Pantry
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Pantry"@en, "Pantry"@sv;
+    rdfs:subClassOf rec:FoodHandlingRoom.
+rec:ParkingSpace
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Parking space"@en, "Parking space"@sv;
+    rdfs:subClassOf rec:Zone.
+rec:Partition
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Partition"@en, "Partition"@sv;
+    rdfs:subClassOf rec:BarrierAsset.
+rec:Person
+    a owl:Class, sh:NodeShape;
+    rdfs:comment "A natural person (i.e., an individual human being)."@en;
+    rdfs:label "Person"@en, "Person"@sv;
+    rdfs:subClassOf rec:Agent;
+    sh:property
+    rec:familyNameShape, rec:genderShape, rec:givenNameShape, rec:imageShape.
+rec:PersonalHygiene
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Personal hygiene room"@en, "Personal hygiene room"@sv;
+    rdfs:subClassOf rec:Room.
+rec:PharmacyRoom
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Pharmacy room"@en, "Pharmacy room"@sv;
+    rdfs:subClassOf rec:HealthcareRoom.
+rec:PhoneBooth
+    a owl:Class, sh:NodeShape;
+    rdfs:label "PhoneBooth"@en, "PhoneBooth"@sv;
+    rdfs:subClassOf rec:Office.
+rec:Point
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Point"@en, "Point"@sv;
+    rdfs:subClassOf rec:Geometry;
+    sh:property rec:coordinatesShape.
+rec:PointEvent
+    a owl:Class, sh:NodeShape;
+    rdfs:comment
+        "An event emanating from or targeting a Point; e.g., an individual Observation from a Sensor point, or an Actuation sent to a Command point. In other terms, the Points indicate the capability of some Space or Equipment to emit or accept data, while this class represents those actual data messages. Note that in most non-trivially sized systems, these events are not stored in the knowledge graph itself, but are rather forwarded to some C&C system or time series database."@en;
+    rdfs:label "Point event"@en, "Point event"@sv;
+    rdfs:subClassOf rec:Event.
+rec:PointOfInterest
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Point of Interest"@en, "Point of Interest"@sv;
+    rdfs:subClassOf rec:Information;
+    sh:property rec:objectOfInterestShape.
+rec:Polygon
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Polygon"@en, "Polygon"@sv;
+    rdfs:subClassOf rec:Geometry;
+    sh:property rec:coordinatesShape.
+rec:Portfolio
+    a owl:Class, sh:NodeShape;
+    rdfs:comment
+        "A portfolio is a grouping of buildings, sites, apartments, campuses, etc. that share some business-relevant commonality, e.g., are managed by the same company, are rented out to the same tenant, share utilization or legal definition (industrial vs commercial), etc."@en;
+    rdfs:label "Portfolio"@en, "Portfolio"@sv;
+    rdfs:subClassOf rec:Collection;
+    sh:property rec:includesShape.
+rec:PostalAddress
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Postal address"@en, "Postal address"@sv;
+    rdfs:subClassOf rec:Information;
+    sh:property
+        rec:addressLine1Shape, rec:addressLine2Shape, rec:cityShape,
+        rec:countryShape, rec:postalCodeShape, rec:regionShape.
+rec:postalCode
+    a owl:DatatypeProperty;
+    rdfs:label "postal code"@en, "postal code"@sv;
+    rdfs:range xsd:string.
+rec:postalCodeShape
+a sh:PropertyShape; sh:datatype xsd:string; sh:path rec:postalCode.
+rec:Premises
+    a owl:Class, sh:NodeShape;
+    rdfs:comment
+        "A premises is an administrative grouping of spaces that are used for some commercial or industrial purpose by a real estate holder or tenant. E.g, a suite of offices, a shop, or an industrial workshop."@en;
+    rdfs:label "Premises"@en, "Premises"@sv;
+    rdfs:subClassOf rec:Collection;
+    sh:property rec:includesShape.
+rec:PrinterCart
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Printer cart"@en, "Printer cart"@sv;
+    rdfs:subClassOf rec:Cart.
+rec:PrinterStand
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Printer stand"@en, "Printer stand"@sv;
+    rdfs:subClassOf rec:Stand.
+rec:producedBy
+    a owl:ObjectProperty;
+    rdfs:label "produced by"@en, "produced by"@sv;
+    rdfs:subPropertyOf rec:relationship.
+rec:producedByShape
+    a sh:PropertyShape;
+    sh:class brick:Point;
+    sh:message
+    "Property producedBy must reference a valid instance of Point"@en;
+    sh:path rec:producedBy.
+rec:RadiologyRoom
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Radiology room"@en, "Radiology room"@sv;
+    rdfs:subClassOf rec:HealthcareRoom.
+rec:RealEstate
+    a owl:Class, sh:NodeShape;
+    rdfs:comment
+        """The legal/administrative representation of some lands and/or buildings. I.e., "Fastighet" (Swedish), "Ejendom" (Denmark), etc."""@en;
+    rdfs:label "Real Estate"@en, "Real Estate"@sv;
+    rdfs:subClassOf rec:Collection;
+    sh:property rec:includesShape.
+rec:Reception
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Reception"@en, "Reception"@sv;
+    rdfs:subClassOf rec:Room.
+rec:ReceptionTable
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Reception table"@en, "Reception table"@sv;
+    rdfs:subClassOf rec:Table.
+rec:RecordingRoom
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Recording room"@en, "Recording room"@sv;
+    rdfs:subClassOf rec:Room.
+rec:RecreationalRoom
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Recreational room"@en, "Recreational room"@sv;
+    rdfs:subClassOf rec:Room.
+rec:region
+    a owl:DatatypeProperty;
+    rdfs:label "region"@en, "region"@sv;
+    rdfs:range xsd:string.
+rec:Region
+    a owl:Class, sh:NodeShape;
+    rdfs:comment
+        """An administrative geospatial unit larger than the individual real estate. For instance, "Lombary", "North America", "The Back Bay", "Elnätsområde Syd", etc."""@en;
+    rdfs:label "Region"@en, "Region"@sv;
+    rdfs:subClassOf rec:Space.
+rec:regionShape a sh:PropertyShape; sh:datatype xsd:string; sh:path rec:region.
+
+rec:regulatedBy
+    a owl:ObjectProperty;
+    rdfs:comment
+    "Indicates the contract regulating the terms of the lease in question. "@en;
+    rdfs:label "regulated by"@en, "regulated by"@sv;
+    rdfs:subPropertyOf rec:relationship.
+rec:regulatedByShape
+    a sh:PropertyShape;
+    sh:class rec:LeaseContract;
+    sh:message
+    "Property regulatedBy must reference a valid instance of LeaseContract"@en;
+    sh:path rec:regulatedBy.
+rec:regulates
+    a owl:ObjectProperty;
+    rdfs:comment
+    "Indicates the lease(s) that this contract regulates the conditions of."@en;
+    rdfs:label "regulates"@en, "regulates"@sv;
+    rdfs:subPropertyOf rec:relationship.
+rec:regulatesShape
+    a sh:PropertyShape;
+    sh:class rec:Lease;
+    sh:message "Property regulates must reference a valid instance of Lease"@en;
+    sh:path rec:regulates.
+rec:relatedTo
+    a owl:ObjectProperty;
+    rdfs:label "related to"@en, "related to"@sv;
+    rdfs:subPropertyOf rec:relationship.
+rec:relatedToShape a sh:PropertyShape; sh:path rec:relatedTo.
+
+rec:relationship
+    a owl:ObjectProperty;
+    rdfs:comment
+    "All REC relationships will be sub properties of rec:relationship"@en;
+    rdfs:label "relationship"@en, "relationship"@sv.
+rec:rentableArea
+    a owl:DatatypeProperty;
+    rdfs:label "rentable area"@en, "rentable area"@sv;
+    rdfs:range xsd:float.
+rec:rentableAreaShape
+a sh:PropertyShape; sh:datatype xsd:float; sh:path rec:rentableArea.
+rec:RestingRoom
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Resting room"@en, "Resting room"@sv;
+    rdfs:subClassOf rec:Room.
+rec:RetailRoom
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Retail room"@en, "Retail room"@sv;
+    rdfs:subClassOf rec:Room.
+rec:Roof
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Roof"@en, "Roof"@sv;
+    rdfs:subClassOf rec:BuildingElement.
+rec:RoofLevel
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Roof level"@en, "Roof level"@sv;
+    rdfs:subClassOf rec:Level.
+rec:Room
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Room"@en, "Room"@sv;
+    rdfs:subClassOf rec:Architecture.
+rec:Safe
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Safe"@en, "Safe"@sv;
+    rdfs:subClassOf rec:Furniture.
+rec:Sauna
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Sauna"@en, "Sauna"@sv;
+    rdfs:subClassOf rec:PersonalHygiene.
+rec:School
+    a owl:Class, sh:NodeShape;
+    rdfs:label "School"@en, "School"@sv;
+    rdfs:subClassOf rec:Building.
+rec:seatingCapacity
+    a owl:DatatypeProperty;
+    rdfs:label "seating capacity"@en, "seating capacity"@sv;
+    rdfs:range xsd:integer.
+rec:seatingCapacityShape
+a sh:PropertyShape; sh:datatype xsd:integer; sh:path rec:seatingCapacity.
+rec:SecurityRoom
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Security room"@en, "Security room"@sv;
+    rdfs:subClassOf rec:Room.
+rec:serialNumber
+    a owl:DatatypeProperty;
+    rdfs:label "serial number"@en, "serial number"@sv;
+    rdfs:range xsd:string.
+rec:serialNumberShape
+a sh:PropertyShape; sh:datatype xsd:string; sh:path rec:serialNumber.
+rec:servicedBy
+    a owl:ObjectProperty;
+    rdfs:label "serviced by"@en, "serviced by"@sv;
+    rdfs:subPropertyOf rec:relationship.
+rec:servicedByShape
+    a sh:PropertyShape;
+    sh:class rec:Agent;
+    sh:message
+    "Property servicedBy must reference a valid instance of Agent"@en;
+    sh:path rec:servicedBy.
+rec:ServiceEntrance
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Service entrance"@en, "Service entrance"@sv;
+    rdfs:subClassOf rec:Entrance.
+rec:ServiceObject
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Service object"@en, "Service object"@sv;
+    rdfs:subClassOf rec:Information;
+    sh:property
+        rec:acknowledgedByShape, rec:acknowledgedTimeShape, rec:closedByShape,
+        rec:closedTimeShape, rec:createdByShape, rec:createdTimeShape,
+        rec:producedByShape, rec:relatedToShape, rec:severityShape,
+        rec:statusShape.
+rec:ServiceShaft
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Service shaft"@en, "Service shaft"@sv;
+    rdfs:subClassOf rec:Room.
+rec:severity
+    a owl:DatatypeProperty;
+    rdfs:label "severity"@en, "severity"@sv;
+    rdfs:range xsd:string.
+rec:severityShape
+    a sh:PropertyShape;
+    rdfs:comment "Allowed values: Major, Minor, Severe"@en;
+    sh:datatype xsd:string;
+    sh:path rec:severity.
+rec:Shelter
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Shelter"@en, "Shelter"@sv;
+    rdfs:subClassOf rec:Room.
+rec:ShelterGasLock
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Shelter gas lock"@en, "Shelter gas lock"@sv;
+    rdfs:subClassOf rec:Shelter.
+rec:ShelterRoom
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Shelter room"@en, "Shelter room"@sv;
+    rdfs:subClassOf rec:Shelter.
+rec:ShoppingMall
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Shopping mall"@en, "Shopping mall"@sv;
+    rdfs:subClassOf rec:Building.
+rec:ShowerRoom
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Shower room"@en, "Shower room"@sv;
+    rdfs:subClassOf rec:PersonalHygiene.
+rec:Site
+    a owl:Class, sh:NodeShape;
+    rdfs:comment
+    "A piece of land upon which zero or more buildings may be situated."@en;
+    rdfs:label "Site"@en, "Site"@sv;
+    rdfs:subClassOf rec:Architecture.
+rec:Slab
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Slab"@en, "Slab"@sv;
+    rdfs:subClassOf rec:BuildingElement.
+rec:SmallStudyRoom
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Small study room"@en, "Small study room"@sv;
+    rdfs:subClassOf rec:EducationalRoom.
+rec:Sofa
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Sofa"@en, "Sofa"@sv;
+    rdfs:subClassOf rec:Furniture.
+rec:sourcePoint
+    a owl:ObjectProperty;
+    rdfs:comment
+        "The brick:Point that emitted this exception."@en,
+        "The brick:Point that emitted this observation."@en;
+    rdfs:label "source point"@en, "source point"@sv;
+    rdfs:subPropertyOf rec:relationship.
+rec:sourcePointShape
+    a sh:PropertyShape;
+    sh:class brick:Point;
+    sh:maxCount 1;
+    sh:message
+        "Property sourcePoint must reference a valid instance of Point. Can have at most one sourcePoint"@en;
+    sh:path rec:sourcePoint.
+rec:Space
+    a owl:Class, sh:NodeShape;
+    rdfs:comment
+        "A contiguous part of the physical world that contains or can contain sub-spaces. E.g., a Region can contain many Sites, which in turn can contain many Buildings."@en;
+    rdfs:label "Space"@en, "Space"@sv;
+    rdfs:subClassOf rec:Entity;
+    sh:property
+        rec:geometryShape, rec:georeferenceShape, rec:hasIdentifierShape,
+        rec:hasPartShape, rec:isLocationOfShape, rec:isPartOfShape,
+        rec:nameShape.
+rec:SprinklerRoom
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Sprinkler room"@en, "Sprinkler room"@sv;
+    rdfs:subClassOf rec:UtilitiesRoom.
+rec:Stadium
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Stadium"@en, "Stadium"@sv;
+    rdfs:subClassOf rec:Building.
+rec:StaffRoom
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Staff room"@en, "Staff room"@sv;
+    rdfs:subClassOf rec:Room.
+rec:Stairwell
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Stairwell"@en, "Stairwell"@sv;
+    rdfs:subClassOf rec:Room.
+rec:Stand
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Stand"@en, "Stand"@sv;
+    rdfs:subClassOf rec:Furniture.
+rec:start
+    a owl:DatatypeProperty;
+    rdfs:label "start"@en, "start"@sv;
+    rdfs:range xsd:dateTime.
+rec:startLevel
+    a owl:DatatypeProperty;
+    rdfs:label "start level"@en, "start level"@sv;
+    rdfs:range xsd:string.
+rec:startLevelShape
+a sh:PropertyShape; sh:datatype xsd:string; sh:path rec:startLevel.
+rec:startShape a sh:PropertyShape; sh:datatype xsd:dateTime; sh:path rec:start.
+
+rec:status
+    a owl:DatatypeProperty;
+    rdfs:label "status"@en, "status"@sv;
+    rdfs:range xsd:string.
+rec:statusShape
+    a sh:PropertyShape;
+    rdfs:comment "Allowed values: Acknowledged, Closed, Unacknowledged"@en;
+    sh:datatype xsd:string;
+    sh:path rec:status.
+rec:Storage
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Storage"@en, "Storage"@sv;
+    rdfs:subClassOf rec:Room.
+rec:StorageCabinet
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Storage cabinet"@en, "Storage cabinet"@sv;
+    rdfs:subClassOf rec:Furniture.
+rec:SubBuilding
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Sub-building"@en, "Sub-building"@sv;
+    rdfs:subClassOf rec:Architecture.
+rec:Table
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Table"@en, "Table"@sv;
+    rdfs:subClassOf rec:Furniture.
+rec:targetPoint
+    a owl:ObjectProperty;
+    rdfs:comment
+        "The brick:Point(s) (e.g., brick:Commands, brick:Setpoints, or brick:Parameters) that the actuation will target/execute."@en;
+    rdfs:label "target point"@en, "target point"@sv;
+    rdfs:subPropertyOf rec:relationship.
+rec:targetPointShape
+    a sh:PropertyShape;
+    sh:class brick:Point;
+    sh:message
+    "Property targetPoint must reference a valid instance of Point"@en;
+    sh:path rec:targetPoint.
+rec:TeamRoom
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Team room"@en, "Team room"@sv;
+    rdfs:subClassOf rec:Room.
+rec:TelecommunicationRoom
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Telecommunication room"@en, "Telecommunication room"@sv;
+    rdfs:subClassOf rec:CableRoom.
+rec:Theater
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Theater"@en, "Theater"@sv;
+    rdfs:subClassOf rec:Room.
+rec:TherapyRoom
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Therapy room"@en, "Therapy room"@sv;
+    rdfs:subClassOf rec:HealthcareRoom.
+rec:timestamp
+    a owl:DatatypeProperty;
+    rdfs:label "timestamp"@en, "timestamp"@sv;
+    rdfs:range xsd:dateTime.
+rec:timestampShape
+a sh:PropertyShape; sh:datatype xsd:dateTime; sh:path rec:timestamp.
+rec:Toilet
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Toilet"@en, "Toilet"@sv;
+    rdfs:subClassOf rec:PersonalHygiene.
+rec:TreatmentRoom
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Treatment room"@en, "Treatment room"@sv;
+    rdfs:subClassOf rec:Room.
+rec:TreatmentWaitingRoom
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Treatment waiting room"@en, "Treatment waiting room"@sv;
+    rdfs:subClassOf rec:TreatmentRoom.
+rec:tripDirection
+    a owl:DatatypeProperty;
+    rdfs:label "trip direction"@en, "trip direction"@sv;
+    rdfs:range xsd:string.
+rec:tripDirectionShape
+    a sh:PropertyShape;
+    rdfs:comment "Allowed values: Down, Up"@en;
+    sh:datatype xsd:string;
+    sh:path rec:tripDirection.
+rec:turnoverDate
+    a owl:DatatypeProperty;
+    rdfs:label "turnover date"@en, "turnover date"@sv;
+    rdfs:range xsd:date.
+rec:turnoverDateShape
+a sh:PropertyShape; sh:datatype xsd:date; sh:path rec:turnoverDate.
+rec:TVStand
+    a owl:Class, sh:NodeShape;
+    rdfs:label "TV stand"@en, "TV stand"@sv;
+    rdfs:subClassOf rec:Stand.
+rec:url
+    a owl:DatatypeProperty, owl:ObjectProperty;
+    rdfs:label "URL"@en, "URL"@sv;
+    rdfs:range xsd:anyURI;
+    rdfs:subPropertyOf rec:relationship.
+rec:urlShape a sh:PropertyShape; sh:path rec:url.
+
+rec:UtilitiesRoom
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Utilities room"@en, "Utilities room"@sv;
+    rdfs:subClassOf rec:Room.
+rec:value
+    a owl:DatatypeProperty;
+    rdfs:domain rec:Identifier;
+    rdfs:label "value"@en, "value"@sv;
+    rdfs:range xsd:string.
+rec:valueShape a sh:PropertyShape; sh:datatype xsd:string; sh:path rec:value.
+
+rec:VirtualBuilding
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Virtual building"@en, "Virtual building"@sv;
+    rdfs:subClassOf rec:Building.
+rec:Wall
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Wall"@en, "Wall"@sv;
+    rdfs:subClassOf rec:BuildingElement.
+rec:WallInner
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Wall (inner)"@en, "Wall (inner)"@sv;
+    rdfs:subClassOf rec:Wall.
+rec:WasteBasket
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Waste basket"@en, "Waste basket"@sv;
+    rdfs:subClassOf rec:Furniture.
+rec:WasteManagementRoom
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Waste management room"@en, "Waste management room"@sv;
+    rdfs:subClassOf rec:Room.
+rec:weight
+    a owl:DatatypeProperty;
+    rdfs:label "weight"@en, "weight"@sv;
+    rdfs:range xsd:string.
+rec:weightShape a sh:PropertyShape; sh:datatype xsd:string; sh:path rec:weight.
+
+rec:widthScaleFactor
+    a owl:DatatypeProperty;
+    rdfs:label "width scale factor"@en, "width scale factor"@sv;
+    rdfs:range xsd:double.
+rec:widthScaleFactorShape
+a sh:PropertyShape; sh:datatype xsd:double; sh:path rec:widthScaleFactor.
+rec:Window
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Window"@en, "Window"@sv;
+    rdfs:subClassOf rec:BarrierAsset.
+rec:WorkOrder
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Work order"@en, "Work order"@sv;
+    rdfs:subClassOf rec:ServiceObject.
+rec:Workshop
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Workshop"@en, "Workshop"@sv;
+    rdfs:subClassOf rec:Room.
+rec:Workspace
+    a owl:Class, sh:NodeShape;
+    rdfs:label "Workspace"@en, "Workspace"@sv;
+    rdfs:subClassOf rec:Zone.
+rec:xRotationalScaleFactor
+    a owl:DatatypeProperty;
+    rdfs:label "x rotational scale factor"@en, "x rotational scale factor"@sv;
+    rdfs:range xsd:double.
+rec:xRotationalScaleFactorShape
+a sh:PropertyShape; sh:datatype xsd:double; sh:path rec:xRotationalScaleFactor.
+rec:yRotationalScaleFactor
+    a owl:DatatypeProperty;
+    rdfs:label "y rotational scale factor"@en, "y rotational scale factor"@sv;
+    rdfs:range xsd:double.
+rec:yRotationalScaleFactorShape
+a sh:PropertyShape; sh:datatype xsd:double; sh:path rec:yRotationalScaleFactor.
+rec:Zone
+    a owl:Class, sh:NodeShape;
+    rdfs:comment
+        "A sub-zone within or outside of a building defined to support some technology and/or use, e.g., an HVAC zone, a parking space, a security zone, etc."@en;
+    rdfs:label "Zone"@en, "Zone"@sv;
+    rdfs:subClassOf rec:Architecture.
