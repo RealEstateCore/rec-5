@@ -1,0 +1,28 @@
+{
+  "name": "rec-to-dtdl",
+  "version": "0.1.0",
+  "description": "Convert REC OWL/SHACL Turtle ontology to DTDL models",
+  "type": "module",
+  "bin": {
+    "rec-to-dtdl": "./dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/cli.ts",
+    "test": "vitest run",
+    "convert": "tsx src/cli.ts -o ../dtdl-output ../ontology/rec-ontology-configured.ttl"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "BSD-3-Clause",
+  "dependencies": {
+    "commander": "^14.0.3",
+    "n3": "^2.0.3"
+  },
+  "devDependencies": {
+    "@types/n3": "^1.26.1",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.0"
+  }
+}
