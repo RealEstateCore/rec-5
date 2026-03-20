@@ -30,7 +30,11 @@ export const ClassToInterfaceHandler: TripleHandler = {
         iface.description = comments;
       }
 
-      if (parentIri) {
+      // Only set extends if the parent is a known owl:Class that will also
+      // become a DTDL Interface.  rec:Entity (the root) is not declared as
+      // owl:Class in the ontology, so referencing it would create a dangling
+      // extends that ADT cannot resolve.
+      if (parentIri && ctx.classHierarchy.has(parentIri)) {
         iface.extends = iriToDtmi(parentIri);
       }
 
