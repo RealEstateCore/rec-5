@@ -138,21 +138,8 @@ export const ComponentHandler: TripleHandler = {
           schema: iriToDtmi(rangeIri),
         };
 
-        // Build a clean displayName: if the label is just the raw property
-        // name (e.g. "hasArea"), derive a user-friendly name from the
-        // component name instead.  Otherwise use the ontology label as-is.
-        const cleanDisplay: Record<string, string> = {};
         if (Object.keys(propDef.labels).length > 0) {
-          for (const [lang, label] of Object.entries(propDef.labels)) {
-            if (label === propDef.localName) {
-              // Label is the raw property name — generate a friendly one
-              cleanDisplay[lang] =
-                componentName.charAt(0).toUpperCase() + componentName.slice(1);
-            } else {
-              cleanDisplay[lang] = label;
-            }
-          }
-          component.displayName = cleanDisplay;
+          component.displayName = propDef.labels;
         }
 
         // Remove the relationship that was added in stage 5 for this property
