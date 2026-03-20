@@ -61,10 +61,11 @@ export const ObjectPropertyToRelationshipHandler: TripleHandler = {
         if (primaryShape.targetClasses.length === 1) {
           rel.target = iriToDtmi(primaryShape.targetClasses[0]);
         } else if (primaryShape.targetClasses.length > 1) {
-          // Union range — use first, warn
-          rel.target = iriToDtmi(primaryShape.targetClasses[0]);
+          // Union range — omit target entirely; DTDL allows relationships
+          // without a target, which is more correct than picking one
+          // arbitrarily from the union.
           ctx.warnings.push(
-            `Union range on ${propDef.localName} — using first class ${primaryShape.targetClasses[0]}`
+            `Union range on ${propDef.localName} — omitting target (candidates: ${primaryShape.targetClasses.map((c) => c.split("#").pop()).join(", ")})`
           );
         }
 
