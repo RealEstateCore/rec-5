@@ -5,8 +5,9 @@ import { TripleStore } from "./triple-store.js";
 import { createContext, type ConversionContext } from "./context.js";
 import { getProfile, type DtdlProfile } from "./dtdl-profile.js";
 import { pipeline } from "./handlers/index.js";
-import { writeOutput } from "./writer.js";
+import { writeOutput, writeReport } from "./writer.js";
 import { REC } from "./namespaces.js";
+import type { ConverterConfig } from "./config.js";
 
 export interface ConvertOptions {
   inputFiles: string[];
@@ -14,6 +15,7 @@ export interface ConvertOptions {
   dtdlVersion: "v2" | "v3";
   dryRun: boolean;
   verbose: boolean;
+  config?: ConverterConfig;
 }
 
 export function convert(options: ConvertOptions): ConversionContext {
@@ -33,7 +35,7 @@ export function convert(options: ConvertOptions): ConversionContext {
   }
 
   // 2. Create the conversion context
-  const ctx = createContext(profile, REC);
+  const ctx = createContext(profile, REC, options.config);
 
   // 3. Run the pipeline
   for (const handler of pipeline) {
@@ -48,6 +50,7 @@ export function convert(options: ConvertOptions): ConversionContext {
   // 4. Write output (unless dry run)
   if (!options.dryRun) {
     writeOutput(options.outputDir, ctx);
+    writeReport(options.outputDir, ctx);
   }
 
   return ctx;
@@ -62,11 +65,19 @@ export function printStats(ctx: ConversionContext, verbose: boolean): void {
   console.log(`  Components:       ${ctx.stats.componentCount}`);
   console.log(`  Enumerations:     ${ctx.stats.enumCount}`);
   console.log(`  Warnings:         ${ctx.stats.warningCount}`);
+  console.log(`  Skipped:          ${ctx.skipped.length}`);
 
   if (ctx.warnings.length > 0 && verbose) {
     console.log("\n--- Warnings ---");
     for (const w of ctx.warnings) {
       console.log(`  ⚠ ${w}`);
+    }
+  }
+
+  if (ctx.skipped.length > 0 && verbose) {
+    console.log("\n--- Skipped ---");
+    for (const s of ctx.skipped) {
+      console.log(`  ⊘ ${s.iri}: ${s.reason}`);
     }
   }
 }

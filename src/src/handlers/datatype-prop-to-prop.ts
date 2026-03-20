@@ -91,7 +91,13 @@ export const DatatypePropertyToPropertyHandler: TripleHandler = {
           ctx.stats.propertyCount++;
         }
       }
-      // Datatype properties without a class are silently dropped (e.g., standalone definitions)
+      else {
+        // Datatype properties without a class — track as skipped
+        ctx.skipped.push({
+          iri,
+          reason: "DatatypeProperty has no owning class (no SHACL shape or rdfs:domain)",
+        });
+      }
     }
   },
 };

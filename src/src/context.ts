@@ -3,6 +3,7 @@
  */
 import type { DTDLInterface, LocalizedString } from "./dtdl-types.js";
 import type { DtdlProfile } from "./dtdl-profile.js";
+import type { ConverterConfig } from "./config.js";
 
 export interface PropertyDef {
   iri: string;
@@ -31,6 +32,7 @@ export interface ShapeDef {
 export interface ConversionContext {
   profile: DtdlProfile;
   baseNamespace: string;
+  config: ConverterConfig;
 
   // Accumulated output
   interfaces: Map<string, DTDLInterface>;
@@ -46,7 +48,15 @@ export interface ConversionContext {
 
   // Diagnostics
   warnings: string[];
+  skipped: SkippedItem[];
   stats: ConversionStats;
+}
+
+export interface SkippedItem {
+  /** IRI of the subject that was skipped */
+  iri: string;
+  /** Why this was skipped */
+  reason: string;
 }
 
 export interface ConversionStats {
@@ -61,11 +71,13 @@ export interface ConversionStats {
 
 export function createContext(
   profile: DtdlProfile,
-  baseNamespace: string
+  baseNamespace: string,
+  config?: ConverterConfig
 ): ConversionContext {
   return {
     profile,
     baseNamespace,
+    config: config ?? { components: { detect: true, include: [], exclude: [] } },
     interfaces: new Map(),
     classHierarchy: new Map(),
     classLabels: new Map(),
@@ -75,6 +87,7 @@ export function createContext(
     shapeDefinitions: new Map(),
     shapesByPath: new Map(),
     warnings: [],
+    skipped: [],
     stats: {
       classCount: 0,
       interfaceCount: 0,

@@ -66,6 +66,53 @@ export function writeOutput(outputDir: string, ctx: ConversionContext): void {
   }
 }
 
+export function writeReport(outputDir: string, ctx: ConversionContext): void {
+  const lines: string[] = [];
+  lines.push("# Conversion Report");
+  lines.push("");
+  lines.push(`Generated: ${new Date().toISOString()}`);
+  lines.push("");
+
+  // Summary
+  lines.push("## Summary");
+  lines.push("");
+  lines.push(`- Classes found: ${ctx.stats.classCount}`);
+  lines.push(`- Interfaces generated: ${ctx.stats.interfaceCount}`);
+  lines.push(`- Relationships: ${ctx.stats.relationshipCount}`);
+  lines.push(`- Properties: ${ctx.stats.propertyCount}`);
+  lines.push(`- Components: ${ctx.stats.componentCount}`);
+  lines.push(`- Enumerations: ${ctx.stats.enumCount}`);
+  lines.push("");
+
+  // Warnings
+  if (ctx.warnings.length > 0) {
+    lines.push("## Warnings");
+    lines.push("");
+    for (const w of ctx.warnings) {
+      lines.push(`- ${w}`);
+    }
+    lines.push("");
+  }
+
+  // Skipped / unconverted items
+  if (ctx.skipped.length > 0) {
+    lines.push("## Skipped (not converted)");
+    lines.push("");
+    for (const item of ctx.skipped) {
+      lines.push(`- \`${item.iri}\`: ${item.reason}`);
+    }
+    lines.push("");
+  }
+
+  if (ctx.warnings.length === 0 && ctx.skipped.length === 0) {
+    lines.push("No warnings or skipped items.");
+    lines.push("");
+  }
+
+  const reportPath = join(outputDir, "conversion-report.md");
+  writeFileSync(reportPath, lines.join("\n"), "utf-8");
+}
+
 function findNearestMajorAncestor(
   classIri: string,
   ctx: ConversionContext

@@ -2,14 +2,17 @@
  * Stage 8: Detect value-type classes and convert their linking ObjectProperty
  * to a DTDL Component instead of a Relationship.
  *
- * Heuristic (all three must hold):
+ * Heuristic (both must hold):
  *   1. The ObjectProperty has sh:maxCount 1 on at least one shape.
  *   2. The range class has NO outgoing ObjectProperties (no relationships
  *      leaving it — it's a pure "value type" or "struct" class).
- *   3. The range class is a leaf class (no subclasses in the hierarchy).
  *
- * If all conditions hold, the property becomes a Component whose schema
- * points to the range class's Interface.
+ * Component detection is configurable via the converter config:
+ *   - detect: enable/disable heuristic detection (default: true)
+ *   - include: property IRIs or local names to always treat as components
+ *   - exclude: property IRIs or local names to never treat as components
+ *
+ * Component name = the object property's local name as-is (faithful to ontology).
  */
 import type { TripleHandler } from "./handler.js";
 import type { TripleStore } from "../triple-store.js";
@@ -21,6 +24,9 @@ export const ComponentHandler: TripleHandler = {
   name: "Component",
 
   handle(_store: TripleStore, ctx: ConversionContext): void {
+    const componentConfig = ctx.config.components ?? { detect: true };
+    const includeSet = new Set(componentConfig.include ?? []);
+    const excludeSet = new Set(componentConfig.exclude ?? []);
     // Pre-compute: which classes have outgoing object properties?
     // A class has outgoing relationships if any ObjectProperty shape
     // references it as the owning class (via sh:property on the class's NodeShape).
@@ -78,12 +84,46 @@ export const ComponentHandler: TripleHandler = {
     for (const [propIri, propDef] of ctx.propertyDefinitions) {
       if (propDef.kind !== "object") continue;
 
-      // Condition 1: must have sh:maxCount 1 on at least one shape
-      const shapes = ctx.shapesByPath.get(propIri) ?? [];
-      const hasMaxOne = shapes.some((s) => s.maxCount === 1);
-      if (!hasMaxOne) continue;
+      const propLocalName = propDef.localName;
 
-      // Determine the range class
+      // Check explicit exclude — never make this a component
+      if (excludeSet.has(propIri) || excludeSet.has(propLocalName)) continue;
+
+      // Check explicit include — always make this a component (skip heuristic)
+      const forceInclude =
+        includeSet.has(propIri) || includeSet.has(propLocalName);
+
+      if (!forceInclude) {
+        // Heuristic detection must be enabled
+        if (componentConfig.detect === false) continue;
+
+        // Condition 1: must have sh:maxCount 1 on at least one shape
+        const shapes = ctx.shapesByPath.get(propIri) ?? [];
+        const hasMaxOne = shapes.some((s) => s.maxCount === 1);
+        if (!hasMaxOne) continue;
+
+        // Determine the range class
+        let rangeIri = propDef.range;
+        if (!rangeIri) {
+          for (const s of shapes) {
+            if (s.targetClasses.length > 0) {
+              rangeIri = s.targetClasses[0];
+              break;
+            }
+          }
+        }
+        if (!rangeIri) continue;
+
+        // Condition 2: range class must have NO outgoing object properties
+        const rangeHasOutgoing = classHasOutgoingRels.get(rangeIri) ?? false;
+        if (rangeHasOutgoing) continue;
+
+        // Condition 3: range class must be in the class hierarchy (not external)
+        if (!ctx.classHierarchy.has(rangeIri)) continue;
+      }
+
+      // Determine range for schema reference
+      const shapes = ctx.shapesByPath.get(propIri) ?? [];
       let rangeIri = propDef.range;
       if (!rangeIri) {
         for (const s of shapes) {
@@ -95,26 +135,8 @@ export const ComponentHandler: TripleHandler = {
       }
       if (!rangeIri) continue;
 
-      // Condition 2: range class must have NO outgoing object properties
-      // (If it's not in classHasOutgoingRels, it has no shapes at all → qualifies)
-      const rangeHasOutgoing = classHasOutgoingRels.get(rangeIri) ?? false;
-      if (rangeHasOutgoing) continue;
-
-      // Condition 3: range class must be a leaf (no subclasses)
-      if (classesWithSubclasses.has(rangeIri)) continue;
-
-      // Condition 4: range class must be in the class hierarchy (not external)
-      // External classes (e.g., brick:Point) may appear as leaves only because
-      // we don't have their full ontology loaded.
-      if (!ctx.classHierarchy.has(rangeIri)) continue;
-
-      // This property qualifies as a component!
-      // Derive component name: hasArea → area, hasIdentifier → identifier
-      let componentName = propDef.localName;
-      if (componentName.startsWith("has")) {
-        componentName =
-          componentName.charAt(3).toLowerCase() + componentName.slice(4);
-      }
+      // Component name = property localName as-is (faithful to ontology)
+      const componentName = propLocalName;
 
       // Find owning classes via SHACL shapes
       const owningClasses = new Set<string>();

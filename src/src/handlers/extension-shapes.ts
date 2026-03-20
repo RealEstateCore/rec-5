@@ -54,6 +54,10 @@ export const ExtensionShapesHandler: TripleHandler = {
         ctx.warnings.push(
           `Extension shape ${shapeNode.value} targets unknown class ${targetClassIri} — skipped`
         );
+        ctx.skipped.push({
+          iri: shapeNode.value,
+          reason: `Extension shape targets unknown class ${targetClassIri}`,
+        });
         continue;
       }
 

@@ -119,6 +119,10 @@ export const ObjectPropertyToRelationshipHandler: TripleHandler = {
         ctx.warnings.push(
           `Property ${propDef.localName} has no owning class — skipped`
         );
+        ctx.skipped.push({
+          iri,
+          reason: "ObjectProperty has no owning class (no SHACL shape or rdfs:domain)",
+        });
       }
     }
   },
