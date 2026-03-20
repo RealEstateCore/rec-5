@@ -24,7 +24,7 @@ const MAJOR_CLASSES = new Set([
 ]);
 
 export function writeOutput(outputDir: string, ctx: ConversionContext): void {
-  const recDir = join(outputDir, "rec");
+  const recDir = join(outputDir, "models");
   mkdirSync(recDir, { recursive: true });
 
   // Build a map of class IRI → nearest major ancestor for folder grouping
