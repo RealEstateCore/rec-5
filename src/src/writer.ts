@@ -104,7 +104,17 @@ export function writeReport(outputDir: string, ctx: ConversionContext): void {
     lines.push("");
   }
 
-  if (ctx.warnings.length === 0 && ctx.skipped.length === 0) {
+  // Semantic notes (OWL characteristics lost in translation)
+  if (ctx.semanticNotes.length > 0) {
+    lines.push("## Semantic Properties Lost in Translation");
+    lines.push("");
+    for (const note of ctx.semanticNotes) {
+      lines.push(`- **${note.property}**: ${note.note}`);
+    }
+    lines.push("");
+  }
+
+  if (ctx.warnings.length === 0 && ctx.skipped.length === 0 && ctx.semanticNotes.length === 0) {
     lines.push("No warnings or skipped items.");
     lines.push("");
   }

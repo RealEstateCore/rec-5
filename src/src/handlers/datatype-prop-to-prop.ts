@@ -92,11 +92,28 @@ export const DatatypePropertyToPropertyHandler: TripleHandler = {
         }
       }
       else {
-        // Datatype properties without a class — track as skipped
-        ctx.skipped.push({
-          iri,
-          reason: "DatatypeProperty has no owning class (no SHACL shape or rdfs:domain)",
-        });
+        const mode = ctx.config.orphanedProperties ?? "skip";
+        if (mode === "root") {
+          for (const [classIri, parentIri] of ctx.classHierarchy) {
+            if (parentIri !== null) continue;
+            const iface = ctx.interfaces.get(classIri);
+            if (iface) {
+              iface.contents = iface.contents ?? [];
+              iface.contents.push({ ...prop });
+              ctx.stats.propertyCount++;
+            }
+          }
+        } else {
+          ctx.skipped.push({
+            iri,
+            reason: "DatatypeProperty has no owning class (no SHACL shape or rdfs:domain)",
+          });
+          if (mode === "report") {
+            ctx.warnings.push(
+              `Orphaned property ${propDef.localName} — no owning class found`
+            );
+          }
+        }
       }
     }
   },

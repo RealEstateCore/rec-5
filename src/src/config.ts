@@ -12,8 +12,18 @@ export interface ComponentConfig {
   exclude?: string[];
 }
 
+/**
+ * How to handle properties that have no owning class (no SHACL shape or rdfs:domain).
+ *  - "skip":   Silently skip (default, current behaviour)
+ *  - "report": Skip but highlight prominently in the conversion report
+ *  - "root":   Attach to every root interface (classes with no parent)
+ */
+export type OrphanedPropertyMode = "skip" | "report" | "root";
+
 export interface ConverterConfig {
   components?: ComponentConfig;
+  /** Strategy for properties that have no owning class. Default: "skip" */
+  orphanedProperties?: OrphanedPropertyMode;
 }
 
 const DEFAULT_CONFIG: ConverterConfig = {
@@ -22,6 +32,7 @@ const DEFAULT_CONFIG: ConverterConfig = {
     include: [],
     exclude: [],
   },
+  orphanedProperties: "skip",
 };
 
 export function loadConfig(filePath?: string): ConverterConfig {
@@ -36,5 +47,6 @@ export function loadConfig(filePath?: string): ConverterConfig {
       include: parsed.components?.include ?? [],
       exclude: parsed.components?.exclude ?? [],
     },
+    orphanedProperties: parsed.orphanedProperties ?? "skip",
   };
 }

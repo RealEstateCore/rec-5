@@ -40,6 +40,7 @@ export const SH_MAX_COUNT = namedNode(SH + "maxCount");
 export const SH_MIN_COUNT = namedNode(SH + "minCount");
 export const SH_IN = namedNode(SH + "in");
 export const SH_MESSAGE = namedNode(SH + "message");
+export const SH_OR = namedNode(SH + "or");
 
 export const RDF_FIRST = namedNode(RDF + "first");
 export const RDF_REST = namedNode(RDF + "rest");

@@ -80,20 +80,22 @@ export const ObjectPropertyToRelationshipHandler: TripleHandler = {
         }
       }
 
-      // Build description/comment from OWL metadata
-      const annotations: string[] = [];
-      if (propDef.inverseOf) {
-        annotations.push(`Inverse of: ${propDef.inverseOf.split("#").pop()}`);
-      }
-      if (propDef.characteristics.length > 0) {
-        annotations.push(`OWL: ${propDef.characteristics.join(", ")}`);
-      }
-
       if (Object.keys(propDef.comments).length > 0) {
         rel.description = propDef.comments;
       }
-      if (annotations.length > 0) {
-        rel.comment = annotations.join(". ");
+
+      // Track OWL semantics in the report instead of polluting DTDL output
+      if (propDef.inverseOf) {
+        ctx.semanticNotes.push({
+          property: propDef.localName,
+          note: `Inverse of: ${propDef.inverseOf.split("#").pop()}`,
+        });
+      }
+      if (propDef.characteristics.length > 0) {
+        ctx.semanticNotes.push({
+          property: propDef.localName,
+          note: `OWL: ${propDef.characteristics.join(", ")}`,
+        });
       }
 
       // Place the relationship on the right interface(s)
@@ -116,13 +118,29 @@ export const ObjectPropertyToRelationshipHandler: TripleHandler = {
           ctx.stats.relationshipCount++;
         }
       } else {
-        ctx.warnings.push(
-          `Property ${propDef.localName} has no owning class — skipped`
-        );
-        ctx.skipped.push({
-          iri,
-          reason: "ObjectProperty has no owning class (no SHACL shape or rdfs:domain)",
-        });
+        const mode = ctx.config.orphanedProperties ?? "skip";
+        if (mode === "root") {
+          // Attach to all root interfaces (classes with no parent)
+          for (const [classIri, parentIri] of ctx.classHierarchy) {
+            if (parentIri !== null) continue;
+            const iface = ctx.interfaces.get(classIri);
+            if (iface) {
+              iface.contents = iface.contents ?? [];
+              iface.contents.push({ ...rel });
+              ctx.stats.relationshipCount++;
+            }
+          }
+        } else {
+          ctx.skipped.push({
+            iri,
+            reason: "ObjectProperty has no owning class (no SHACL shape or rdfs:domain)",
+          });
+          if (mode === "report") {
+            ctx.warnings.push(
+              `Orphaned property ${propDef.localName} — no owning class found`
+            );
+          }
+        }
       }
     }
   },

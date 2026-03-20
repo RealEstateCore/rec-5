@@ -49,7 +49,15 @@ export interface ConversionContext {
   // Diagnostics
   warnings: string[];
   skipped: SkippedItem[];
+  semanticNotes: SemanticNote[];
   stats: ConversionStats;
+}
+
+export interface SemanticNote {
+  /** Property local name */
+  property: string;
+  /** OWL characteristics or inverse info lost in translation */
+  note: string;
 }
 
 export interface SkippedItem {
@@ -77,7 +85,7 @@ export function createContext(
   return {
     profile,
     baseNamespace,
-    config: config ?? { components: { detect: true, include: [], exclude: [] } },
+    config: config ?? { components: { detect: true, include: [], exclude: [] }, orphanedProperties: "skip" },
     interfaces: new Map(),
     classHierarchy: new Map(),
     classLabels: new Map(),
@@ -88,6 +96,7 @@ export function createContext(
     shapesByPath: new Map(),
     warnings: [],
     skipped: [],
+    semanticNotes: [],
     stats: {
       classCount: 0,
       interfaceCount: 0,
