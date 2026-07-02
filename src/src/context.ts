@@ -74,6 +74,7 @@ export interface ConversionStats {
   propertyCount: number;
   componentCount: number;
   enumCount: number;
+  dedupCount: number;
   warningCount: number;
 }
 
@@ -104,6 +105,7 @@ export function createContext(
       propertyCount: 0,
       componentCount: 0,
       enumCount: 0,
+      dedupCount: 0,
       warningCount: 0,
     },
   };

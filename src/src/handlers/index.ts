@@ -12,6 +12,7 @@ import { DatatypePropertyToPropertyHandler } from "./datatype-prop-to-prop.js";
 import { EnumerationHandler } from "./enumeration.js";
 import { ComponentHandler } from "./component.js";
 import { ExtensionShapesHandler } from "./extension-shapes.js";
+import { DedupInheritedHandler } from "./dedup-inherited.js";
 
 export const pipeline: TripleHandler[] = [
   // Indexing stages
@@ -26,4 +27,5 @@ export const pipeline: TripleHandler[] = [
   EnumerationHandler,           // Stage 7
   ComponentHandler,             // Stage 8
   ExtensionShapesHandler,       // Stage 9: SHACL extensions via sh:targetClass
+  DedupInheritedHandler,        // Stage 10: Remove inherited duplicates
 ];

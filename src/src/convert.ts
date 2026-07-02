@@ -64,6 +64,9 @@ export function printStats(ctx: ConversionContext, verbose: boolean): void {
   console.log(`  Properties:       ${ctx.stats.propertyCount}`);
   console.log(`  Components:       ${ctx.stats.componentCount}`);
   console.log(`  Enumerations:     ${ctx.stats.enumCount}`);
+  if (ctx.stats.dedupCount > 0) {
+    console.log(`  Inherited dedup:  ${ctx.stats.dedupCount}`);
+  }
   console.log(`  Warnings:         ${ctx.stats.warningCount}`);
   console.log(`  Skipped:          ${ctx.skipped.length}`);
 

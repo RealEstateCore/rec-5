@@ -82,6 +82,9 @@ export function writeReport(outputDir: string, ctx: ConversionContext): void {
   lines.push(`- Properties: ${ctx.stats.propertyCount}`);
   lines.push(`- Components: ${ctx.stats.componentCount}`);
   lines.push(`- Enumerations: ${ctx.stats.enumCount}`);
+  if (ctx.stats.dedupCount > 0) {
+    lines.push(`- Inherited duplicates removed: ${ctx.stats.dedupCount}`);
+  }
   lines.push("");
 
   // Warnings
