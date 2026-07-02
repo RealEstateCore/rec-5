@@ -25,17 +25,19 @@ Options:
 ### Examples
 
 ```bash
+cd tools/rec-to-dtdl
+
 # Single file
-npx tsx src/cli.ts -o ./output ontology/rec-ontology-configured.ttl
+npx tsx src/cli.ts -o ../../output ../../ontology/rec-ontology-configured.ttl
 
 # Multiple files
-npx tsx src/cli.ts -o ./output ontology/core.ttl ontology/spaces.ttl
+npx tsx src/cli.ts -o ../../output ../../ontology/core.ttl ../../ontology/spaces.ttl
 
 # With configuration
-npx tsx src/cli.ts -o ./output --config config.json Brick.ttl
+npx tsx src/cli.ts -o ../../output --config config.json ../../Brick.ttl
 
 # Dry run (no output files written)
-npx tsx src/cli.ts -o ./output --dry-run ontology/*.ttl
+npx tsx src/cli.ts -o ../../output --dry-run ../../ontology/*.ttl
 ```
 
 ## 3. High-Level Architecture
@@ -423,38 +425,42 @@ To support a new OWL/SHACL pattern:
 ## 15. Project Layout
 
 ```
-src/
-├── cli.ts                          # CLI entry point (commander setup)
-├── convert.ts                      # Main orchestrator: load → pipeline → write
-├── triple-store.ts                 # Thin wrapper around N3.Store
-├── context.ts                      # ConversionContext type and factory
-├── config.ts                       # ConverterConfig type and loader
-├── dtdl-types.ts                   # TypeScript types for DTDL v2/v3 structures
-├── dtdl-profile.ts                 # Version abstraction (v2 vs v3 capabilities)
-├── dtmi.ts                         # IRI → DTMI conversion
-├── datatype-map.ts                 # XSD → DTDL schema mapping
-├── namespaces.ts                   # RDF/RDFS/OWL/XSD/SH namespace constants
-├── writer.ts                       # Writes DTDL interfaces + conversion report
-├── handlers/
-│   ├── handler.ts                  # TripleHandler interface
-│   ├── index.ts                    # Pipeline definition (ordered handler array)
-│   ├── index-classes.ts            # Stage 1: Index owl:Class hierarchy
-│   ├── index-properties.ts         # Stage 2: Index OWL properties
-│   ├── index-shapes.ts             # Stage 3: Index SHACL shapes (named + inline)
-│   ├── class-to-interface.ts       # Stage 4: Class → Interface
-│   ├── object-prop-to-rel.ts       # Stage 5: ObjectProperty → Relationship
-│   ├── datatype-prop-to-prop.ts    # Stage 6: DatatypeProperty → Property
-│   ├── enumeration.ts              # Stage 7: sh:in → Enum schema
-│   ├── component.ts                # Stage 8: Configurable component detection
-│   ├── extension-shapes.ts         # Stage 9: sh:targetClass extensions
-│   ├── dedup-inherited.ts          # Stage 10: Remove inherited duplicate contents
-│   ├── component.test.ts           # Tests for component detection
-│   ├── enumeration.test.ts         # Tests for enum sanitization
-│   └── dedup-inherited.test.ts     # Tests for inheritance dedup
-├── config.test.ts                  # Tests for config loading
-├── report.test.ts                  # Tests for report writing
-└── spec/
-    └── converter-spec.md           # This document
+tools/
+└── rec-to-dtdl/                      # Converter package
+    ├── package.json
+    ├── tsconfig.json
+    ├── spec/
+    │   └── converter-spec.md         # This document
+    └── src/
+        ├── cli.ts                    # CLI entry point (commander setup)
+        ├── convert.ts                # Main orchestrator: load → pipeline → write
+        ├── triple-store.ts           # Thin wrapper around N3.Store
+        ├── context.ts                # ConversionContext type and factory
+        ├── config.ts                 # ConverterConfig type and loader
+        ├── dtdl-types.ts             # TypeScript types for DTDL v2/v3 structures
+        ├── dtdl-profile.ts           # Version abstraction (v2 vs v3 capabilities)
+        ├── dtmi.ts                   # IRI → DTMI conversion
+        ├── datatype-map.ts           # XSD → DTDL schema mapping
+        ├── namespaces.ts             # RDF/RDFS/OWL/XSD/SH namespace constants
+        ├── writer.ts                 # Writes DTDL interfaces + conversion report
+        ├── handlers/
+        │   ├── handler.ts            # TripleHandler interface
+        │   ├── index.ts              # Pipeline definition (ordered handler array)
+        │   ├── index-classes.ts      # Stage 1: Index owl:Class hierarchy
+        │   ├── index-properties.ts   # Stage 2: Index OWL properties
+        │   ├── index-shapes.ts       # Stage 3: Index SHACL shapes (named + inline)
+        │   ├── class-to-interface.ts # Stage 4: Class → Interface
+        │   ├── object-prop-to-rel.ts # Stage 5: ObjectProperty → Relationship
+        │   ├── datatype-prop-to-prop.ts # Stage 6: DatatypeProperty → Property
+        │   ├── enumeration.ts        # Stage 7: sh:in → Enum schema
+        │   ├── component.ts          # Stage 8: Configurable component detection
+        │   ├── extension-shapes.ts   # Stage 9: sh:targetClass extensions
+        │   ├── dedup-inherited.ts    # Stage 10: Remove inherited duplicate contents
+        │   ├── component.test.ts     # Tests for component detection
+        │   ├── enumeration.test.ts   # Tests for enum sanitization
+        │   └── dedup-inherited.test.ts # Tests for inheritance dedup
+        ├── config.test.ts            # Tests for config loading
+        └── report.test.ts            # Tests for report writing
 ```
 
 ## 16. Error Handling & Diagnostics
